@@ -1,0 +1,129 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+      <div id="content">
+          {% if(userpassword_error) %}
+            
+            <div class="alert alert-error">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <h4>Log In Error</h4>
+              Invalid username or password. Try again.    
+            </div>
+          {% endif %}
+          <h3>User Personal Details</h3>
+          <div class="well">
+            <form method="post" action="/user_details" id="user_details">
+              
+              <a href="#uploadImage" role="button" data-toggle="modal">
+                <img src="{{ currentUser.photo }}" class="user-image" id="user-image"><br/>Change image profile
+              </a>
+              <hr/>
+              <label for="username">Username</label>
+              <input type="text" id="username" name="name" placeholder="Username" class="span4" value="{{ currentUser.name }}"/>
+              <label for="first_name">First Name</label>
+              <input type="text" id="first_name" name="first_name" placeholder="First Name" class="span4" value="{{ currentUser.first_name }}"/>
+              <label for="last_name">Last Name</label>
+              <input type="text" id="last_name" name="last_name" placeholder="Last Name" class="span4" value="{{ currentUser.last_name }}"/>
+              <br/><br/>
+              <button class="btn btn-medium btn-primary" type="submit">Save</button>
+            </form>
+          </div>
+          
+          <!-- Modal uploadImage -->
+          <div id="uploadImage" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 500px;">
+            <form id="user_image" action="/user_image" method="post" enctype="multipart/form-data">
+              <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Change image</h3>
+              </div>
+              <div class="modal-body">
+                <label for="file">Choose image from your computer</label>
+                <input type="file" name="image" id="file">
+                <br/><br/>
+                <div class="progress">
+                    <div class="bar"></div >
+                    <div class="percent">0%</div >
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" type="submit">Upload</button>
+              </div>
+            </form>
+          </div>
+          <!-- /Modal uploadImage -->
+
+          <!-- Modal uploadImage -->
+          <div id="cropImage" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 500px;">
+            <form id="user_image_crop" action="/user_image_crop" method="post" enctype="multipart/form-data">
+              <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Crop image</h3>
+              </div>
+              <div class="modal-body">
+                  <div id="jcrop_target_parent">
+                    <img id="jcrop_target" />
+                  </div>
+                  <hr/>
+                  <div style="width:60px;height:60px;overflow:hidden;">
+                    <img id="preview" style="max-width: none;"/>
+                  </div>
+                  <div class="progress">
+                      <div class="bar"></div >
+                      <div class="percent">0%</div >
+                  </div>
+                  <div id="crop-info" style="display:none;">
+                    <input type="hidden" name="x1" value="" />
+                    <input type="hidden" name="y1" value="" />
+                    <input type="hidden" name="x2" value="" />
+                    <input type="hidden" name="y2" value="" />
+                    <input type="hidden" name="w" value="" />
+                    <input type="hidden" name="h" value="" />
+                  </div>
+                  <div id="crop_details"></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" type="submit">Crop</button>
+              </div>
+            </form>
+          </div>
+          <!-- /Modal uploadImage -->
+          
+          <hr/>
+          <h3>User LogIn Details</h3>
+          <div class="well"> 
+            <form method="post" action="/user_login" id="change_password">
+              <label for="old_password">Old Password</label>
+              <input type="password" id="old_password" name="old_password" placeholder="Old Password" class="span4" />
+
+              <label for="password">New Password</label>
+              <input type="password" id="password" name="password" placeholder="New Password" class="span4" />
+              
+              <label for="password2">Confirm Password</label>
+              <input type="password" id="password2" name="password2" placeholder="Confirm Password" class="span4" />
+              <br/><br/>
+              <button class="btn btn-medium btn-primary" type="submit">Save</button>
+            </form>
+            <hr/>
+            <form method="post" action="/user_login_email" id="change_email">
+              <label for="old_email">Email</label>
+              <input type="text" id="old_email" name="old_email" placeholder="Email" class="span4"/>
+              <label for="email">New Email</label>
+              <input type="text" id="email" name="email" placeholder="New Email" class="span4"/>
+              <label for="email2">Confirm Email</label>
+              <input type="text" id="email2" name="email2" placeholder="Confirm Email" class="span4"/>
+              <br/><br/>
+              <button class="btn btn-medium btn-primary" type="submit">Save</button>
+            </form>
+          </div>  
+      </div><!--/#content-->
+      <div class="clearfix"></div>
+{% include '_footer.html' %}
+  <link href="/js/lib/jquery.jcrop/css/jquery.jcrop.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="/js/lib/jquery.imgareaselect/css/imgareaselect-default.css" />
+  <script>
+    window.is_logged = {{ is_logged == 1 ? 1 : 0 }};
+  </script> 
+  <script src="js/lib/require.js"></script>
+  <script src="js/me.js"></script>
+{% include '_bottom.html' %}

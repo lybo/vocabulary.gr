@@ -1,0 +1,215 @@
+<script id="exercise-1-header" type="text/template">
+                                    
+                  <th class="lang_title_left"> <%= lang_1_title %></th>
+                  <th style="width: 8px;"><a href="#" class="btn btn-mini btn-inverse" id="swap-languages"><span class="icon icon-retweet icon-white"></span></a></th>
+                  <th class="lang_title_right"><%= lang_2_title %></th>
+                  <th id="parent-answers" class="parentAnswers"><a href="#" class="answers _tooltip" data-toggle="tooltip" data-placement="top" title="Show the answers" tabindex = "-1"><span class="icon icon-eye-open"></span></a><span class="title">Answers</span></th>
+</script>
+
+<script id="exercise-2-header" type="text/template">
+                                    
+                  <th class="lang_title_left"><%= lang_2_title %></th>
+                  <th style="width: 8px;"><a href="#" class="btn btn-mini btn-inverse" id="swap-languages"><span class="icon icon-retweet icon-white"></span></a></th>
+                  <th class="lang_title_right"><%= lang_1_title %></th>
+                  <th id="parent-answers" class="parentAnswers"><a href="#" class="answers _tooltip" data-toggle="tooltip" data-placement="top" title="Show the answers" tabindex = "-1"><span class="icon icon-eye-open"></span></a><span class="title">Answers</span></th>
+</script>
+
+<script id="exercise-1-showInList" type="text/template">
+						
+                  <td class="right"><span class="word"><%= word_1.replace(/,/g, ', ') %></span> <a href="#" class="speaker _tooltip" data-toggle="tooltip" data-placement="top" title="Listen" tabindex = "-1"><!--<span class="icon icon-volume-down"></span>--></a></td>
+                  <td class="equal">=</td>
+                  <td class="userInput"><input type="text" name="word_2[]" value="" class="word_2 input-small userAnswer"></td>
+                  <td class="answer"><input type="hidden" name="translation_id[]" value="<%= id %>" class="translation_id" /><span class="icon result icon-hand-left hidden"></span><div class="small answer hidden"><%= word_2.replace(',', ',<br/>') %> <a href="#" class="speaker _tooltip" data-toggle="tooltip" data-placement="top" title="Listen" tabindex = "-1"><span class="icon icon-volume-down"></span></a></div></td>
+                  
+</script>
+
+<script id="exercise-2-showInList" type="text/template">
+						      
+			            <td class="right"><span class="word"><%= word_2.replace(/,/g, ', ') %></span> <a href="#" class="speaker _tooltip" data-toggle="tooltip" data-placement="top" title="Listen" tabindex = "-1"><!--<span class="icon icon-volume-down"></span>--></a></td>
+                  <td class="equal">=</td>
+                  <td class="userInput"><input type="text" name="word_1[]" value="" class="word_1 input-small userAnswer"></td>
+                  <td class="answer"><input type="hidden" name="translation_id[]" value="<%= id %>" class="translation_id" /><span class="icon result icon-hand-left hidden"></span><div class="small answer hidden"><%= word_1.replace(',', ',<br/>') %> <a href="#" class="speaker2 _tooltip" data-toggle="tooltip" data-placement="top" title="Listen" tabindex = "-1"><span class="icon icon-volume-down"></span></a></div></td>
+                  
+</script>
+
+<script id="exercise-controls" type="text/template">        
+                        <strong class="text-info">Num Words:</strong>
+                        <div id="exercise-slicer" class="btn-group btn-centered" data-toggle="buttons-radio">
+                          <button type="button" class="btn btn-mini btn-inverse all _tooltip" data-toggle="tooltip" data-placement="top" title="all words" data-value="<%= collection_length %>">All</button>
+                          <button type="button" class="btn btn-mini btn-inverse active _tooltip" data-toggle="tooltip" data-placement="top" title="5 words per page" data-value="5">5</button>
+                          <button type="button" class="btn btn-mini btn-inverse _tooltip" data-toggle="tooltip" data-placement="top" title="10 words per page" data-value="10">10</button>
+                          <button type="button" class="btn btn-mini btn-inverse _tooltip" data-toggle="tooltip" data-placement="top" title="15 words per page" data-value="15">15</button>
+                          <button type="button" class="btn btn-mini btn-inverse _tooltip" data-toggle="tooltip" data-placement="top" title="20 words per page" data-value="20">20</button>
+                          <button type="button" class="btn btn-mini btn-inverse _tooltip" data-toggle="tooltip" data-placement="top" title="30 words per page" data-value="30">30</button>
+                          <button type="button" class="btn btn-mini btn-inverse difficult_words _tooltip" data-toggle="tooltip" data-placement="top" title="The system remembers for you. Exercise only the words that you cannot learn yet." data-value="<%= collection_length %>">Difficult Words</button>
+                        </div>
+                                   
+</script>
+
+<script id="exercise-pagination" type="text/template">
+                      <% if(pagination_num > 1){ %>
+                        <strong class="text-info">Pagination: </strong><br/>
+                        <div class="btn-group btn-centered" data-toggle="btn-radio">
+                          <% if(currentPage>1){ %>
+                          <button type="button" class="btn btn-small  control prev">«</button>
+                          <% } %>
+                          <% 
+                          var is_hidden = 'hidden',
+                              is_active = ''
+                          ;
+                          for (var i = 1; i <= pagination_num; i++) { 
+
+                              is_hidden = 'hidden';
+                              if( currentPage - 2 <= i && currentPage + 2 >= i ) {
+                                is_hidden = '';
+                              }
+
+                              is_active = '';
+                              if( currentPage == i ) {
+                                is_active = 'active';
+                              }
+                          %>
+                          <button type="button" class="btn btn-small  page <%= is_hidden %> <%= is_active %>"><%= i %></button>
+                          <% } %>
+                          <% if(currentPage<pagination_num){ %>
+                          <button type="button" class="btn btn-small  control next">»</button>
+                          <% } %>
+                        </div>
+                      <% } else { %>
+                        
+                      <% } %>
+</script>
+
+<script id="exercise2-header" type="text/template">
+                                    
+                  <th class="lang_title_left"> <%= lang_1_title %></th>
+                  <th style="width: 8px;"></th>
+                  <th class="lang_title_right"><%= lang_2_title %></th>
+                  <th class="parentAnswers"><a href="#" class="answers _tooltip" data-toggle="tooltip" data-placement="top" title="Show the answers" tabindex = "-1"><span class="icon icon-eye-open"></span></a><span class="title">Answers</span></th>
+</script>
+
+
+<script id="exercise2-showInList" type="text/template">
+                  
+                  <td class="right"><a href="#" class="speaker _tooltip" data-toggle="tooltip" data-placement="top" title="Listen" tabindex = "-1"><span class="icon icon-volume-down"></span></a></td>
+                  <td class="equal">=</td>
+                  <td class="userInput"><input type="text" name="word_1[]" value="" class="word_1 span3 userAnswer"></td>
+                  <td class="answer">
+                    <input type="hidden" name="translation_id[]" value="<%= id %>" class="translation_id" />
+                    <span class="icon result icon-hand-left hidden"></span>
+                    <div class="small answer hidden"><%= word_1.replace(/,/g, ', ') %><hr/><%= word_2.replace(/,/g, ', ') %></div>
+                  </td>
+                  
+</script>
+
+<script id="exercise2-pagination" type="text/template">
+                      <% if(pagination_num > 1){ %>
+                        <div class="btn-group btn-centered" data-toggle="btn-radio">
+                          <% if(currentPage>1){ %>
+                          <button type="button" class="btn btn-small  control prev">«</button>
+                          <% } %>
+                          <% 
+                          var is_hidden = 'hidden',
+                              is_active = ''
+                          ;
+                          for (var i = 1; i <= pagination_num; i++) { 
+
+                              is_hidden = 'hidden';
+                              if( currentPage - 2 <= i && currentPage + 2 >= i ) {
+                                is_hidden = '';
+                              }
+
+                              is_active = '';
+                              if( currentPage == i ) {
+                                is_active = 'active';
+                              }
+                          %>
+                          <button type="button" class="btn btn-small  page <%= is_hidden %> <%= is_active %>"><%= i %></button>
+                          <% } %>
+                          <% if(currentPage<pagination_num){ %>
+                          <button type="button" class="btn btn-small  control next">»</button>
+                          <% } %>
+                        </div>
+                      <% } else { %>
+                        no pagination
+                      <% } %>
+</script>
+
+<script id="exercise-recommendations" type="text/template">
+              
+                  <%
+                  next_words.span = prev_words.length ? 'span6' : 'span12'; 
+                  prev_words.span = next_words.length ? 'span6' : 'span12'; 
+                  %>
+                  <div class="well well-small"> 
+                    <div class="row-fluid">
+
+                    <% if(prev_words.length){ %>
+                      <div class="<%= prev_words.span %> recommendation-header text-center">
+                        <span class="icon icon-step-backward"></span> Review the previous and the current <%= current_words_data.words_length %> word<% if(current_words_data.words_length>1){ %>s<% } %></span>
+                      </div><!-- .span6 -->
+                    <% } %>
+                    <% if(next_words.length){ %>
+                      <div class="<%= next_words.span %> recommendation-header text-center">
+                        <span class="icon icon-step-forward"></span> Exercise the next</span>
+                      </div><!-- .span6 -->
+                    <% } %>
+                    </div> <!-- .row-fluid -->
+
+                    
+                    
+                    <div class="row-fluid">
+
+                    <% if(prev_words.length){ %>
+                      <div class="<%= prev_words.span %>">
+                        <hr/>
+                        <ul class="nav nav-pills">
+                          <% _.forEach(prev_words, function(item){ %>
+                          <li><a href="#exercise/<%= item.eachpage %>/<%= item.new_page %>"><%= item.prev_num  %> words</a></li>
+                          <% }); %>
+                        </ul>
+                        <hr/>
+                      </div><!-- .span6 -->
+                    <% } %>
+
+                    <% if(next_words.length){ %>
+                      <div class="<%= next_words.span %>">
+                        <hr/>
+                        <ul class="nav nav-pills">
+                          <% _.forEach(next_words, function(item){ %>
+                          <li><a href="#exercise/<%= item.eachpage %>/<%= item.next_page %>"><%= item.eachpage  %> words</a></li>
+                          <% }); %>
+                        </ul>
+                        <hr/>
+                      </div><!-- .span6 -->
+                    <% } %>
+
+                    </div> <!-- .row-fluid -->
+                    <div class="row-fluid">
+                      <div class="span12">
+                        <br/>
+                        <%
+                          var words_studied = current_words_data.eachpage*current_words_data.page;  
+                          var rest_words =  all_words - words_studied; 
+                          
+                        %>
+                        <center class="muted">
+                        <% if(rest_words > 0){ %>
+                        You need still <%= rest_words %> words from <%=all_words%> words to finish
+                        <% } else if( current_words_data.page>1 ) { %>
+                        You are at the end of the vocabulary
+                        <% } else { %>
+                        This vocabulary doesn't provide more words
+                        <% } %>
+                        </center>
+                      </div>
+                    </div> <!-- .row-fluid -->
+                  </div><!-- .well -->
+                  
+
+              
+                      
+</script>
+
+		
+

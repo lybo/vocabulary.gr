@@ -1,0 +1,38 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+      <div id="content">
+        <div class="well">
+            <h3>Log In</h3>
+            
+            {% if(login_error) %}
+              
+              <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Log In Error</h4>
+                Invalid username or password. Try again.    
+              </div>
+            {% endif %}
+
+            <form id="complete-login-form" method="post" action="/login">
+              <input type="text" id="completeLoginEmail" name="email" placeholder="Email" class="span4"/>
+              <input type="password" id="completeLoginpassword" name="password" placeholder="Password" class="span4" />
+              <br/><br/>
+              <label class="checkbox">
+                  <input type="checkbox" value="remember-me"> Remember&nbsp;me
+              </label>
+              <a href="/remindme" class="">Forgot your password?</a>
+              <br/><br/>
+              <button class="btn btn-large btn-primary" type="submit">Log In</button>
+
+              or <a href="/signup">register for a Vocabulary.gr account</a>
+            </form>
+        </div> 
+      </div><!--/#content-->
+      <div class="clearfix"></div>
+{% include '_footer.html' %}
+    
+  <script src="js/lib/require.js"></script>
+  <script src="js/login.js"></script>
+{% include '_bottom.html' %}

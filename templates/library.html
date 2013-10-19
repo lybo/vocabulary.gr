@@ -1,0 +1,69 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+
+      <div id="content">
+          <div id="vocabularies">
+            <div  id="content-header" > <!-- data-spy="affix" data-offset-top="50" data-offset-bottom="150" -->
+              <h3>My Bookmarks</h3>
+                <div class="control-group">
+                  <div class="controls form-inline">
+                    <div class="input-prepend input-append">
+                      <span class="add-on"><i class="icon-search"></i></span>
+                      <input class="span4" id="search-input" type="text" placeholder="search">
+                    </div>    
+                  </div>
+                </div>
+                <hr>
+            </div>
+
+            <div id="vocabulary-list">
+                <div class="alert alert-info">
+                    This is your Library. You can find the vocabularies that you would like to practice with them. This is the button <button title="" data-placement="top" data-toggle="tooltip" class="btn btn-mini btn-info _tooltip" data-original-title="Add to your Library for your convenience"><span class="icon icon-bookmark icon-white"></span> Add to your Library</button> which there is in any exercise in order to add the current vocabulary in your Library.
+                </div>
+            </div><!-- /.media -->
+          </div>
+      </div><!-- /#content -->
+
+      <!-- Modal confirmbox -->
+      <div class="modal hide fade" role="dialog" aria-hidden="true" tabindex="-1" id="confirmbox">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>Remove this vocabulary from your library?</h3>
+        </div>
+        <div class="modal-body">
+          <p>Be certain!</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="confirmFalse">Cancel</button>
+          <button class="btn btn-primary" id="confirmTrue">OK</button>
+        </div>
+      </div>
+      <!-- /Modal confirmbox -->
+
+
+                       
+{% include '_footer.html' %}
+  <link rel="stylesheet" type="text/css" href="/js/lib/jquery.tags_input_master/jquery.tagsinput.css" />
+  <script>
+    window.is_logged = {% if(is_logged) %}1;{% else %}0;{% endif %}
+
+    window.currentUser = { id: "{{ currentUser.id }}", email: "{{ currentUser.email }}", name: "{{ currentUser.name }}", lang_id: "{{ currentUser.lang_id }}" };
+
+    {% if (vocabularies|length)  %}
+    window.vocabularies = [{% for vocabulary in vocabularies %}
+    {id: "{{ vocabulary.id }}", title: "{{ vocabulary.title|e }}", source: "{{ vocabulary.source|e }}", source_url: "{{ vocabulary.source_url }}", lang_1_id: {{ vocabulary.lang_1_id }}, lang_2_id: {{ vocabulary.lang_2_id }}, date_in: {{ vocabulary.date_in }}, num_translations: {{ vocabulary.num_translations }}, labels: "{{ vocabulary.labels|e }}", user_id: {{ vocabulary.user_id }}, library_id: {{ vocabulary.library_id }} },
+    {% endfor %}];
+    {% endif %}
+
+    window.langs = [{ id:"1", title: "AFRIKAANS" }, { id:"2", title: "ALBANIAN" }, { id:"3", title: "AMHARIC" }, { id:"4", title: "ARABIC" }, { id:"5", title: "ARMENIAN" }, { id:"6", title: "AZERBAIJANI" }, { id:"7", title: "BASQUE" }, { id:"8", title: "BELARUSIAN" }, { id:"9", title: "BENGALI" }, { id:"10", title: "BIHARI" }, { id:"11", title: "BRETON" }, { id:"12", title: "BULGARIAN" }, { id:"13", title: "BURMESE" }, { id:"14", title: "CATALAN" }, { id:"15", title: "CHEROKEE" }, { id:"16", title: "CHINESE" }, { id:"17", title: "CHINESE_SIMPLIFIED" }, { id:"18", title: "CHINESE_TRADITIONAL" }, { id:"19", title: "CORSICAN" }, { id:"20", title: "CROATIAN" }, { id:"21", title: "CZECH" }, { id:"22", title: "DANISH" }, { id:"23", title: "DHIVEHI" }, { id:"24", title: "DUTCH" }, { id:"25", title: "ENGLISH" }, { id:"26", title: "ESPERANTO" }, { id:"27", title: "ESTONIAN" }, { id:"28", title: "FAROESE" }, { id:"29", title: "FILIPINO" }, { id:"30", title: "FINNISH" }, { id:"31", title: "FRENCH" }, { id:"32", title: "FRISIAN" }, { id:"33", title: "GALICIAN" }, { id:"34", title: "GEORGIAN" }, { id:"35", title: "GERMAN" }, { id:"36", title: "GREEK" }, { id:"37", title: "GUJARATI" }, { id:"38", title: "HAITIAN_CREOLE" }, { id:"39", title: "HEBREW" }, { id:"40", title: "HINDI" }, { id:"41", title: "HUNGARIAN" }, { id:"42", title: "ICELANDIC" }, { id:"43", title: "INDONESIAN" }, { id:"44", title: "INUKTITUT" }, { id:"45", title: "IRISH" }, { id:"46", title: "ITALIAN" }, { id:"47", title: "JAPANESE" }, { id:"48", title: "JAVANESE" }, { id:"49", title: "KANNADA" }, { id:"50", title: "KAZAKH" }, { id:"51", title: "KHMER" }, { id:"52", title: "KOREAN" }, { id:"53", title: "KURDISH" }, { id:"54", title: "KYRGYZ" }, { id:"55", title: "LAO" }, { id:"56", title: "LATIN" }, { id:"57", title: "LATVIAN" }, { id:"58", title: "LITHUANIAN" }, { id:"59", title: "LUXEMBOURGISH" }, { id:"60", title: "MACEDONIAN" }, { id:"61", title: "MALAY" }, { id:"62", title: "MALAYALAM" }, { id:"63", title: "MALTESE" }, { id:"64", title: "MAORI" }, { id:"65", title: "MARATHI" }, { id:"66", title: "MONGOLIAN" }, { id:"67", title: "NEPALI" }, { id:"68", title: "NORWEGIAN" }, { id:"69", title: "OCCITAN" }, { id:"70", title: "ORIYA" }, { id:"71", title: "PASHTO" }, { id:"72", title: "PERSIAN" }, { id:"73", title: "POLISH" }, { id:"74", title: "PORTUGUESE" }, { id:"75", title: "PORTUGUESE_PORTUGAL" }, { id:"76", title: "PUNJABI" }, { id:"77", title: "QUECHUA" }, { id:"78", title: "ROMANIAN" }, { id:"79", title: "RUSSIAN" }, { id:"80", title: "SANSKRIT" }, { id:"81", title: "SCOTS_GAELIC" }, { id:"82", title: "SERBIAN" }, { id:"83", title: "SINDHI" }, { id:"84", title: "SINHALESE" }, { id:"85", title: "SLOVAK" }, { id:"86", title: "SLOVENIAN" }, { id:"87", title: "SPANISH" }, { id:"88", title: "SUNDANESE" }, { id:"89", title: "SWAHILI" }, { id:"90", title: "SWEDISH" }, { id:"91", title: "SYRIAC" }, { id:"92", title: "TAJIK" }, { id:"93", title: "TAMIL" }, { id:"94", title: "TATAR" }, { id:"95", title: "TELUGU" }, { id:"96", title: "THAI" }, { id:"97", title: "TIBETAN" }, { id:"98", title: "TONGA" }, { id:"99", title: "TURKISH" }, { id:"103", title: "UIGHUR" }, { id:"100", title: "UKRAINIAN" }, { id:"101", title: "URDU" }, { id:"102", title: "UZBEK" }, { id:"104", title: "VIETNAMESE" }, { id:"105", title: "WELSH" }, { id:"106", title: "YIDDISH" }, { id:"107", title: "YORUBA" } ];
+
+    {% if (users|length)  %}
+    window.users = [{% for user in users %}{ id: "{{ user.id }}", email: "{{ user.email }}", name: "{{ user.name }}", num_subscribes: {{ user.num_subscribes }} } {% endfor %}];
+    {% endif %}
+
+  </script>
+  <script src="/js/lib/require.js"></script>
+  <script src="/js/user_library.js"></script>
+{% include '_bottom.html' %}

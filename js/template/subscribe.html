@@ -1,0 +1,21 @@
+<script id="subscribe-showInList" type="text/template">
+
+							<a href="/vocabularies/user/<%= subscribe.subscribe_user_id %>"><img src="<%= users.get(subscribe.subscribe_user_id).get('photo') %>" width="20" class="user-image" /> <%= users.get(subscribe.subscribe_user_id).get('name') %></a>
+					
+</script>
+
+<script id="subscribe-addButton" type="text/template">
+
+							<button class="btn btn-mini btn-info subscribe _tooltip" id="subscribe" data-userid="<%= user.id %>" data-toggle="tooltip" data-placement="top" title="Subscribe to user's (<%= user.name %>) vocabularies "><span class="icon icon-bookmark icon-white"></span> Subscribe</button>
+					
+</script>
+
+<script id="subscribe-removeButton" type="text/template">
+
+							<button class="btn btn-mini btn-danger subscribe _tooltip" id="unsubscribe" data-userid="<%= user.id %>" data-toggle="tooltip" data-placement="top" title="Unsubscribe to user's (<%= user.name %>) vocabularies "><span class="icon icon-bookmark icon-white"></span> Unsubscribe</button>
+					
+</script>
+
+
+		
+

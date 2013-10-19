@@ -1,0 +1,38 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+      <div id="content">
+        <div class="well">
+          {% if(is_activated == 1)  %}
+            <h3>Your account has been activated</h3>
+            <div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <h4>Success!</h4>
+              You can log in now
+            </div>
+          {% else %}
+            {% if(has_allready_activated == 0) %}
+              <h3>Your account hasn't been activated</h3>
+              <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Error</h4>
+                It has been occured an error on your activation. Try again.      
+              </div>
+            {% else %}
+              <h3>Your account has allready been activated</h3>
+              <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Info</h4>
+                Your account has allready been activated. <br/><br/><a href="/remindme"><strong>If you don't remember your password click here.</strong></a>    
+              </div>
+            {% endif %}
+          {% endif %}
+        </div> 
+      </div><!--/#content-->
+      <div class="clearfix"></div>
+{% include '_footer.html' %}
+    
+  <script src="js/lib/require.js"></script>
+  <script src="js/home.js"></script>
+{% include '_bottom.html' %}

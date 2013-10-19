@@ -1,0 +1,101 @@
+<script id="button_submit" type="text/template">
+
+	<input type="submit" value="<%= input.name %>" class="ui-button ui-widget ui-state-default ui-corner-all" />
+				
+</script>
+
+<script id="button_reset" type="text/template">
+
+	<input type="reset" value="<%= input.name %>" class="ui-button ui-widget ui-state-default ui-corner-all" />
+				
+</script>
+
+<script id="tab" type="text/template">
+
+	<div class="tab-container">
+		<ul>
+			<%  _.each(groupTitles, function(data, key){  %>
+				<li><a href="#<%= key %>"><%= data.title %></a></li>
+			<% }); %>
+		</ul>
+		
+		<%  _.each(groupContent, function(value, key){  %>
+			<div id="<%= key %>" class="tab-content"><%= value %></div>
+		<% }); %>
+	</div>
+			
+</script>
+
+<script id="hidden" type="text/template">
+
+	<input type="hidden" id="<%= input.id %>" name="<%= input.name %>" value="<%= input.value %>" />
+				
+</script>
+
+<script id="text" type="text/template">
+
+	<label for="<%= input.id %>"><%= input.label %></label>
+	<input type="text" class="<%= input.id %> input" name="<%= input.name %>" id="<%= input.id %>" value="<%= input.value %>" placeholder="<%= input.placeholder %>" />
+				
+</script>
+
+<script id="textarea" type="text/template">
+			
+	<label for="<%= input.id %>"><%= input.label %></label>
+	<textarea class="<%= input.id %> input" id="<%= input.id %>" name="<%= input.name %>" placeholder="<%= input.placeholder %>"><%= input.value %></textarea>
+			
+</script>
+
+<script id="editor" type="text/template">
+			
+	<label for="<%= input.id %>"><%= input.label %></label>
+	<textarea class="<%= input.id %> input fck" id="<%= input.id %>" name="<%= input.name %>" placeholder="<%= input.placeholder %>"><%= input.value %></textarea>
+			
+</script>
+
+<script id="checkbox" type="text/template">
+		
+	<input type="checkbox" class="<%= input.id %> input" id="<%= input.id %>" name="<%= input.name %>" value="<%= input.value %>" placeholder="<%= input.placeholder %>" />		
+	<label for="<%= input.id %>"><%= input.label %></label>
+	
+</script>
+
+<script id="radio" type="text/template">
+	
+	<label for="<%= input.id %>"><%= input.label %></label>
+	<% _.forEach(options, function(option){ %>	
+		<input type="radio" class="<%= input.id %> input" id="<%= input.id %>-<%= option.name %>" name="<%= option.name %>" value="<%= option.value %>" <% if(input.value == option.id){ %>checked="checked"<% } %> />	
+		<div>
+			<img src="<%= option.icon %>" />	
+			<label for="<%= option.namespace %>-<%= option.name %>"><%= option.label %></label>
+		</div>
+	<% }); %>
+
+</script>
+
+<script id="select" type="text/template">
+	
+	<label for="<%= input.id %>"><%= input.label %></label>
+	<select id="<%= input.id %>" name="<%= input.name %>" class="input">
+		<option value=""><%= input.placeholder %></option>
+		<% _.forEach(options, function(option){ %>	
+			<option value="<%= option.id %>" <% if(input.value == option.id){ %>selected="selected"<% } %> <% if(option.color){ %>style="background: <%= option.color %> "<% } %> ><%= option.title %></option>	
+		<% }); %>
+	</select>
+
+</script>
+
+<script id="tokeninput" type="text/template">
+
+	<label for="<%= input.id %>"><%= input.label %></label>
+	<input type="text" class="<%= input.id %> input" name="<%= input.name %>" id="<%= input.id %>" value="<%= input.value %>" placeholder="<%= input.placeholder %>" />
+				
+</script>
+
+<script id="upload" type="text/template">
+	
+	<label for="<%= input.id %>"><%= input.label %></label>
+	<input type="file" class="<%= input.id %> input" name="<%= input.name %>" id="<%= input.id %>" value="<%= input.value %>" placeholder="<%= input.placeholder %>" />
+	<ul id="<%= input.id %>-container"></ul>
+				
+</script>

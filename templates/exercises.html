@@ -1,0 +1,156 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar_exercise.html' %}
+      
+		  <div id="content">
+          <div style="width: 0; height:0; overflow: hidden;" id="speaker_phones"><div id="speaker_player"></div></div><!--  -->
+          <h4 id="vocabularyTitle">{{ vocabulary.title }}</h4>
+          {% if vocabulary.source  %} 
+            {% if vocabulary.source_url  %}
+            <h6 id="vocabularySource"><a href="http://{{vocabulary.source_url}}" target="_blank">{{ vocabulary.source }}</a></h6>
+            {% else %}
+            <h6 id="vocabularySource">{{ vocabulary.source }}</h6>
+            {% endif %}
+          {% endif %}
+          <!-- AddThis Button END -->
+          
+            <hr/>
+            <!-- Modal -->
+            <div id="howitworks" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">How it works</h3>
+              </div>
+              <div class="modal-body">
+                <p>Under construction</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              </div>
+            </div>
+            <div id="library-controls" class="{% if (vocabularyLibrary)  %}include-library{%  else  %}exclude-library{% endif %}">
+
+              <a href="#" id="help-button" class="btn btn-mini btn-info _tooltip"  data-placement="top" title="Watch a small introduction about this page" ><span class="icon icon-info-sign icon-white"></span> Introduction</a>
+
+              <a href="#howitworks"  class="btn btn-mini btn-info _tooltip"  data-placement="top" title="Read how you can exercise a vocabulary" data-toggle="modal"><span class="icon icon-info-sign icon-white"></span> How it works</a>
+             
+              
+            {% if(is_logged) %}
+              <button id="add-library" class="btn btn-mini btn-info  _tooltip" data-toggle="tooltip" data-placement="top" title="Add to your Library for your convenience" data-vocabularyId="{{ vocabulary.id }}"><span class="icon icon-bookmark icon-white"></span> Add to your Library</button>
+
+              <button id="remove-library" class="btn btn-mini btn-danger  _tooltip" data-toggle="tooltip" data-placement="top" title="This Vocabulary belongs into your Library. Remove it from your Library" {% if(vocabularyLibrary) %}data-libraryid="{{ vocabularyLibrary.id }}"{% endif %}><span class="icon icon-bookmark icon-white"></span> Remove from your Library</button>
+            {% endif %}
+            </div>
+          
+          
+
+
+          <div id="execise_loader">Please wait...<br/><img src="/images/loader.gif" /></div>
+          <div id="all-exercises">
+            
+            <div id="exercise-recommendations"></div>  
+            <div id="exercise-overall-scoring"></div>
+
+            <div class="tabbable" id="exercise_tabs"> <!-- Only required for left/right tabs -->
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#exercises" data-toggle="tab">Exercise <span class="icon icon-eye-open"></span></a></li>
+                <li><a href="#exercises2" data-toggle="tab">Exercise <span class="icon icon-headphones"></span></a></li>
+                <li><a href="#comments" data-toggle="tab">Comments <span class="icon icon-comment"></span></a></li>
+                
+              </ul>
+              <div class="tab-content">
+
+                <div class="tab-pane active" id="exercises">
+                  <div class="translation practice" id="exercise-list">
+                    <table class="table table-striped table-condensed" style="width: 448px;">
+                      <thead>
+                        
+                        <tr id="header-langs"></tr>
+                      </thead>
+                      <tbody id="exercise-list-body">
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th colspan="4">
+                            <button class="btn btn-inverse span4" id="validation"><span class="icon icon-question-sign icon-white"></span> Validate </button>
+                            <button class="btn span4" id="try_again"><span class="icon icon-repeat"></span> Try again! </button>
+                          </th>
+                        </tr>
+                        
+                      </tfoot>
+                    </table>
+
+                  </div>
+                </div>
+                <div class="tab-pane" id="exercises2">
+                  <div class="translation practice" id="exercise2-list">
+                    <table class="table table-striped table-condensed" style="width: 448px;">
+                      <thead>
+                        
+                        <tr id="header-langs2">
+                            <th></th>
+                            <th></th>
+                            <th><span class="header2"></span></th>
+                            <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="exercise2-list-body">
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th colspan="4">
+                            <button class="btn btn-inverse span4" id="validation2"><span class="icon icon-question-sign icon-white"></span> Validate </button>
+                            <button class="btn span4" id="try_again2"><span class="icon icon-repeat"></span> Try again! </button>
+                          </th>
+                        </tr>
+                        
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane" id="comments">
+                  <div style="padding:10px;">
+                    <h3>Comments</h3>
+                    Under Construction
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div><!-- /#content -->
+
+      
+                       
+{% include '_footer.html' %}
+	<link rel="stylesheet" type="text/css" href="/js/lib/jquery.tags_input_master/jquery.tagsinput.css" />
+	<script>
+
+    window.is_logged = {% if(is_logged) %}1;{% else %}0;{% endif %}
+    window.currentUser = { id: "{{ currentUser.id }}", email: "{{ currentUser.email }}", name: "{{ currentUser.name }}", lang_id: "{{ currentUser.lang_id }}" };
+    window.vocabularyOwner = { id: "{{ vocabularyOwner.id }}", email: "{{ vocabularyOwner.email }}", name: "{{ vocabularyOwner.name }}", num_subscribes: "{{ vocabularyOwner.num_subscribes }}" };
+
+    {% if (vocabularyLibrary)  %}
+    window.vocabularyLibrary = {id: "{{ vocabularyLibrary.id }}" };
+    {% endif %}
+
+		{% if translations|length %}
+		window.translations = [{% for translation in translations %}
+      {id: "{{ translation.id }}", word_1: "{{ translation.word_1|e }}", word_2: "{{ translation.word_2|e }}" },
+    {% endfor %}];
+		{% else %}
+    window.translations = new Array();  
+    {% endif %}
+
+    {% if(vocabulary)  %}
+    window.vocabulary = { id: {{ vocabulary.id }}, title: "{{ vocabulary.title|e }}", user_id: {{ vocabulary.user_id }}, source: "{{ vocabulary.source|e }}", source_url: "{{ vocabulary.source_url|e }}", lang_1_id: {{ vocabulary.lang_1_id }}, lang_2_id: {{ vocabulary.lang_2_id }}, date_in: {{ vocabulary.date_in }}, labels: "{{ vocabulary.labels|e }}", num_translations: {{ vocabulary.num_translations }} };
+    {% endif %}
+
+    window.langs = [ {id: "1", title: "AFRIKAANS", short_title: "af"}, {id: "2", title: "ALBANIAN", short_title: "sq"}, {id: "3", title: "AMHARIC", short_title: "am"}, {id: "4", title: "ARABIC", short_title: "ar"}, {id: "5", title: "ARMENIAN", short_title: "hy"}, {id: "6", title: "AZERBAIJANI", short_title: "az"}, {id: "7", title: "BASQUE", short_title: "eu"}, {id: "8", title: "BELARUSIAN", short_title: "be"}, {id: "9", title: "BENGALI", short_title: "bn"}, {id: "10", title: "BIHARI", short_title: "bh"}, {id: "11", title: "BRETON", short_title: "br"}, {id: "12", title: "BULGARIAN", short_title: "bg"}, {id: "13", title: "BURMESE", short_title: "my"}, {id: "14", title: "CATALAN", short_title: "ca"}, {id: "15", title: "CHEROKEE", short_title: "chr"}, {id: "16", title: "CHINESE", short_title: "zh"}, {id: "17", title: "CHINESE_SIMPLIFIED", short_title: "zh-CN"}, {id: "18", title: "CHINESE_TRADITIONAL", short_title: "zh-TW"}, {id: "19", title: "CORSICAN", short_title: "co"}, {id: "20", title: "CROATIAN", short_title: "hr"}, {id: "21", title: "CZECH", short_title: "cs"}, {id: "22", title: "DANISH", short_title: "da"}, {id: "23", title: "DHIVEHI", short_title: "dv"}, {id: "24", title: "DUTCH", short_title: "nl"}, {id: "25", title: "ENGLISH", short_title: "en"}, {id: "26", title: "ESPERANTO", short_title: "eo"}, {id: "27", title: "ESTONIAN", short_title: "et"}, {id: "28", title: "FAROESE", short_title: "fo"}, {id: "29", title: "FILIPINO", short_title: "tl"}, {id: "30", title: "FINNISH", short_title: "fi"}, {id: "31", title: "FRENCH", short_title: "fr"}, {id: "32", title: "FRISIAN", short_title: "fy"}, {id: "33", title: "GALICIAN", short_title: "gl"}, {id: "34", title: "GEORGIAN", short_title: "ka"}, {id: "35", title: "GERMAN", short_title: "de"}, {id: "36", title: "GREEK", short_title: "el"}, {id: "37", title: "GUJARATI", short_title: "gu"}, {id: "38", title: "HAITIAN_CREOLE", short_title: "ht"}, {id: "39", title: "HEBREW", short_title: "iw"}, {id: "40", title: "HINDI", short_title: "hi"}, {id: "41", title: "HUNGARIAN", short_title: "hu"}, {id: "42", title: "ICELANDIC", short_title: "is"}, {id: "43", title: "INDONESIAN", short_title: "id"}, {id: "44", title: "INUKTITUT", short_title: "iu"}, {id: "45", title: "IRISH", short_title: "ga"}, {id: "46", title: "ITALIAN", short_title: "it"}, {id: "47", title: "JAPANESE", short_title: "ja"}, {id: "48", title: "JAVANESE", short_title: "jw"}, {id: "49", title: "KANNADA", short_title: "kn"}, {id: "50", title: "KAZAKH", short_title: "kk"}, {id: "51", title: "KHMER", short_title: "km"}, {id: "52", title: "KOREAN", short_title: "ko"}, {id: "53", title: "KURDISH", short_title: "ku"}, {id: "54", title: "KYRGYZ", short_title: "ky"}, {id: "55", title: "LAO", short_title: "lo"}, {id: "56", title: "LATIN", short_title: "la"}, {id: "57", title: "LATVIAN", short_title: "lv"}, {id: "58", title: "LITHUANIAN", short_title: "lt"}, {id: "59", title: "LUXEMBOURGISH", short_title: "lb"}, {id: "60", title: "MACEDONIAN", short_title: "mk"}, {id: "61", title: "MALAY", short_title: "ms"}, {id: "62", title: "MALAYALAM", short_title: "ml"}, {id: "63", title: "MALTESE", short_title: "mt"}, {id: "64", title: "MAORI", short_title: "mi"}, {id: "65", title: "MARATHI", short_title: "mr"}, {id: "66", title: "MONGOLIAN", short_title: "mn"}, {id: "67", title: "NEPALI", short_title: "ne"}, {id: "68", title: "NORWEGIAN", short_title: "no"}, {id: "69", title: "OCCITAN", short_title: "oc"}, {id: "70", title: "ORIYA", short_title: "or"}, {id: "71", title: "PASHTO", short_title: "ps"}, {id: "72", title: "PERSIAN", short_title: "fa"}, {id: "73", title: "POLISH", short_title: "pl"}, {id: "74", title: "PORTUGUESE", short_title: "pt"}, {id: "75", title: "PORTUGUESE_PORTUGAL", short_title: "pt-PT"}, {id: "76", title: "PUNJABI", short_title: "pa"}, {id: "77", title: "QUECHUA", short_title: "qu"}, {id: "78", title: "ROMANIAN", short_title: "ro"}, {id: "79", title: "RUSSIAN", short_title: "ru"}, {id: "80", title: "SANSKRIT", short_title: "sa"}, {id: "81", title: "SCOTS_GAELIC", short_title: "gd"}, {id: "82", title: "SERBIAN", short_title: "sr"}, {id: "83", title: "SINDHI", short_title: "sd"}, {id: "84", title: "SINHALESE", short_title: "si"}, {id: "85", title: "SLOVAK", short_title: "sk"}, {id: "86", title: "SLOVENIAN", short_title: "sl"}, {id: "87", title: "SPANISH", short_title: "es"}, {id: "88", title: "SUNDANESE", short_title: "su"}, {id: "89", title: "SWAHILI", short_title: "sw"}, {id: "90", title: "SWEDISH", short_title: "sv"}, {id: "91", title: "SYRIAC", short_title: "syr"}, {id: "92", title: "TAJIK", short_title: "tg"}, {id: "93", title: "TAMIL", short_title: "ta"}, {id: "94", title: "TATAR", short_title: "tt"}, {id: "95", title: "TELUGU", short_title: "te"}, {id: "96", title: "THAI", short_title: "th"}, {id: "97", title: "TIBETAN", short_title: "bo"}, {id: "98", title: "TONGA", short_title: "to"}, {id: "99", title: "TURKISH", short_title: "tr"}, {id: "103", title: "UIGHUR", short_title: "ug"}, {id: "100", title: "UKRAINIAN", short_title: "uk"}, {id: "101", title: "URDU", short_title: "ur"}, {id: "102", title: "UZBEK", short_title: "uz"}, {id: "104", title: "VIETNAMESE", short_title: "vi"}, {id: "105", title: "WELSH", short_title: "cy"}, {id: "106", title: "YIDDISH", short_title: "yi"}, {id: "107", title: "YORUBA", short_title: "yo"}  ];
+
+    
+    
+	</script>
+	<script src="/js/lib/require.js"></script>
+	<script src="/js/exercise.js"></script>
+{% include '_bottom.html' %}

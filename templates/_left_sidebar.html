@@ -1,0 +1,48 @@
+      <div class="sidebar-nav-fixed pull-left"  ><!--  -->
+        <div ><!-- class="affix" data-spy="affix" data-offset-top="50" -->
+            <div class="sidebar-nav">
+              <ul class="nav nav-list">
+                {% if( is_logged==1 ) %}
+                <li><a href="/home" data-nav="mydashboard"><span class="icon icon-home"></span> Dashboard</a></li>
+                <li><a href="/me" class="_tooltip" data-toggle="tooltip" data-placement="right" title="Edit your Profile" data-nav="profile"><span class="icon icon-user"></span>  <strong>{{ currentUser.name }}</strong></a></li>
+                <li><a href="/vocabularies" class="_tooltip" data-toggle="tooltip" data-placement="right" title="Add/Edit your Vocabularies" data-nav="vocabularies"><span class="icon icon-book"></span> My Vocabularies</a></li>
+                <li><a href="/library" class="_tooltip" data-toggle="tooltip" data-placement="right" title="Bookmark Vocabularies to your Library" data-nav="mylibrary"><span class="icon icon-bookmark"></span> My Bookmarks</a></li>
+                <li class="divider"></li>
+                <li><a href="/new_user" class="_tooltip" data-toggle="tooltip" data-placement="right" title="Click here to create a new Vocabulary" data-nav="mylibrary"><span class="icon icon-plus-sign"></span> Create</a></li>
+                <li class="divider"></li>
+                {% endif %}
+                
+                {% if( is_logged == 0 ) %}
+                <li><a href="/home" data-nav="home">home</a></li>
+                <li><a href="/about" data-nav="about">about</a></li>
+                <li><a href="/howtitworks" data-nav="howtitworks">how it works</a></li>
+                
+                <li class="divider"></li>
+                <li class="nav-header">Subscriptions</li>
+                <li class="active">
+                  <a href="/signup"><i class="icon icon-bullhorn"></i>Login to add vocabularies to your personal library.<br/>You can create your vocabulary and share with other users!</a>
+                </li>
+                {% endif %}
+                {% if( is_logged == 1 ) %}
+                <li class="nav-header">Subscriptions</li>
+                <ul id="subscribes-list" class="nav nav-list">
+                    <li style="padding-left: 25px;"><img src="/images/loader.gif"></li>
+                </ul>
+                {% endif %}
+                <li class="divider"></li>
+                <li class="nav-header">Social Buttons</li>
+                <li>
+                   
+                  <!-- AddThis Button BEGIN -->
+                  <div class="addthis_toolbox addthis_default_style ">
+                  <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                  <a class="addthis_button_tweet"></a>
+                  <a class="addthis_counter addthis_pill_style"></a>
+                  </div>
+                  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-51ed2b3f2d8dde27"></script>
+
+                </li>
+              </ul>
+            </div><!--/.sidebar-nav -->
+        </div>
+      </div><!--/.sidebar-nav-fixed-->

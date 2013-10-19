@@ -1,0 +1,22 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+      <div id="content" class="large">
+          <div class="well">
+            <h3>Your account has not been activated</h3>
+            <div class="alert alert-info">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <h4>Last Step!</h4>
+              Check your e-mail inbox or spam. We have send you the activation e-mail. Read it and follow the instrunctions.
+            </div>
+          </div>
+      </div><!--/row-->
+      <div class="clearfix"></div>
+
+{% include '_footer.html' %}
+  <script>
+    window.is_logged = {{ is_logged == 1 ? 1 : 0 }};
+  </script>  
+  <script src="js/lib/require.js"></script>
+  <script src="js/home.js"></script>
+{% include '_bottom.html' %}

@@ -1,0 +1,116 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+      <div id="content" class="large">
+        <div class="row-fluid">
+          <div class="span12">
+            <div class="row-fluid">
+              <div class="span6 well">
+                       <h3>{{ currentUser.name }}</h3> 
+                       <table class="table table-hover">
+                        <tr>
+                          <td width="80"><strong>Vocabularies: </strong></td>
+                          <td><span class="label label-inverse">{{ currentUser.num_vocabularies }}</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Subscribes: </strong></td>
+                          <td><span class="label label-inverse">{{ currentUser.num_subscribes }}</span></td>
+                        </tr>
+                       </table>
+                       
+                       <br/>
+                       <div class="alert alert-info">
+                        This is your <strong>dashboard</strong>!<br/>
+                        On your left hand you can see your last activities. Below you can see the last vocabularies each your subscribed user if you have subscribed any user. 
+                       </div>
+              </div>
+
+              {% if userLastActivities|length %}
+              <div class="span6 well">
+                <ul class="nav nav-list">
+                  <li class="nav-header">Last Activities</li>
+                  {% for userActivity in userLastActivities %}
+                    <li>{{ userActivity.html }}</li>
+                  {% endfor %}
+                </ul>       
+              </div>
+              {% else %}
+              <div class="span6 well">
+                  Last Activities   
+                  <br/>
+                  <div class="alert alert-info">
+                    
+                  </div>
+              </div>
+              {% endif %}
+
+              {% if users|length %}<div class="span12"><h4>Your Subscribed Users</h4><hr/></div>{% endif %}
+            	<!--
+              user_cached_data
+              id, user_id, last_vocabularies
+              -->
+                {% set i = 0 %}
+                {% for user in users %}
+                  
+                  <div class="span12" id="last_users_vocabularies">
+                    <h4><a href="/vocabularies/user/{{ user.id }}">{{ user.name }}</a></h4>
+                  {% set i = 0 %}
+                  {% for vocabulary in vocabularies %}
+                  
+                    
+                    {% if(vocabulary.user_id == user.id and vocabulary.title != '') %}
+
+                      {% if( i == 0) %}
+                        {% set row = 'start' %}
+                      {% else %}
+                        {% set row = '' %}
+                      {% endif %}
+
+                      {% set i = i + 1 %}
+                      
+                    <div class="vocabulary span4 well well-small {{ row }}">
+                      <div class="inner">
+                        <h4><a href="/exercise/{{ vocabulary.id }}">{{ vocabulary.title }}</a></h4>
+                      
+                        {% set vocabulary_user = "" %}
+                        {% for user in users %}
+                          {% if(user.id == vocabulary.user_id) %}
+                            {% set vocabulary_user = user %}
+                          {% endif %}
+                        {% endfor %}
+
+                        <p>created <strong>{{ vocabulary.elasped_time }}</strong>
+
+                        {% if vocabulary.source_url %}
+                          for <a href="/exercise/{{ vocabulary.source_url }}">{{ vocabulary.source }}</a>
+                        {% else %}
+                          {% if vocabulary.source %}for <strong>{{ vocabulary.source }}</strong>{% endif %}
+                        {% endif %}
+
+                        consists <strong>{{ vocabulary.num_translations }}</strong> Words 
+
+                        and it has <strong>{{ vocabulary_user.num_subscribes }}</strong> subscribers</p>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    
+
+                  {% endfor %}
+                  </div>
+                {% endfor %}
+              
+            </div>
+          </div>   
+          <!-- <iframe width="770" height="433" src="http://www.youtube.com/embed/M-sc73Y-zQA" frameborder="0" allowfullscreen></iframe> -->
+        </div>
+      </div><!--/row-->
+      <div class="clearfix"></div>
+
+{% include '_footer.html' %}
+  <script>
+    window.is_logged = {{ is_logged == 1 ? 1 : 0 }};
+  </script>  
+  <script src="js/lib/require.js"></script>
+  <script src="js/home.js"></script>
+{% include '_bottom.html' %}

@@ -1,0 +1,206 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+
+		  <div id="content">
+          <div id="vocabularies">
+            <div  id="content-header" > <!-- data-spy="affix" data-offset-top="50" data-offset-bottom="150" -->
+              <h3>My Vocabularies</h3>
+                <div class="control-group">
+            	    <div class="controls form-inline">
+                    <div class="input-prepend input-append">
+                      <span class="add-on"><i class="icon-search"></i></span>
+                      <input class="span3" id="search-input" type="text" placeholder="search">
+                      <div class="btn-group">
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                          <span class="icon-cog"></span>
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                          <li class="disabled"><a tabindex="-1" href="#">Order By</a></li>
+                          <li><a href="#" class="orderby" data-field="title" data-sorttype="asc"><i class="icon icon-arrow-up"></i> Title <span class="muted">(A-Z)</span></a></li>
+                          <li><a href="#" class="orderby" data-field="title" data-sorttype="desc"><i class="icon icon-arrow-down"></i> Title <span class="muted">(Z-A)</span></a></li>
+                          <li><a href="#" class="orderby" data-field="date_in" data-sorttype="asc"><i class="icon icon-arrow-up"></i> Date <span class="muted">(old)</span></a></li> 
+                          <li><a href="#" class="orderby" data-field="date_in" data-sorttype="desc"><i class="icon icon-arrow-down"></i> Date <span class="muted">(recent)</span></a></li> 
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- <button class="btn" type="button" data-toggle="modal" data-target="#addvocabulary" id="vocabulary-add"><i class="icon-plus"></i> Add New</button> -->
+                  </div>
+                </div>
+                <hr>
+            </div>
+
+
+            <div id="vocabulary-list">
+ 
+            </div><!-- /.media -->
+          </div>
+      </div><!-- /#content -->
+
+      <!-- Modal confirmbox -->
+      <div class="modal hide fade" role="dialog" aria-hidden="true" tabindex="-1" id="confirmbox">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>Are sure that you want to delete this vocabulary?</h3>
+        </div>
+        <div class="modal-body">
+          <p>Be certain!</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="confirmFalse">Cancel</button>
+          <button class="btn btn-primary" id="confirmTrue">OK</button>
+        </div>
+      </div>
+      <!-- /Modal confirmbox -->
+
+      <!-- Modal editvocabulary -->
+      <div id="editvocabulary" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 700px;">
+      </div>
+      <!-- /Modal editvocabulary -->
+
+      <!-- Modal addvocabulary -->
+      <div id="addvocabulary" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 600px;">
+        <form class="" >
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Add a New Vocabulary</h3>
+          </div>
+          <div class="modal-body" >
+
+
+            <div class="row-fluid">
+
+            <!-- Form Name -->
+
+              <div class="span6">
+                <!-- Text input-->
+                <div class="control-group">
+                  <label class="control-label" for="inputAddTitle">Title</label>
+                  <div class="controls">
+                    <input id="inputAddTitle" name="title" type="text" placeholder="title" class="input-large" required="">
+                    <p class="help-block">type vocabulary's title</p>
+                  </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="control-group">
+                  <label class="control-label" for="selecAddLang1">Your Study Language</label>
+                  <div class="controls">
+                    <select id="selecAddLang1" name="lang_1_id" class="input-large" required="Please select Your Study Language">
+                      <option value="">Select</option>
+                      {% for lang in langs %}<option value="{{ lang.id }}">{{ lang.title }}</option>{% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="control-group">
+                  <label class="control-label" for="selectAddLang2">Your native Language</label>
+                  <div class="controls">
+                    <select id="selectAddLang2" name="lang_2_id" class="input-large" required="Please select Your native Language">
+                      <option value="">Select</option>
+                      {% for lang in langs %}<option value="{{ lang.id }}"  >{{ lang.title }}</option>{% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Text input Labels-->
+                <div class="control-group">
+                  <label class="control-label" for="inputEditLabels">Labels</label>
+                  <div class="controls">
+                    <input id="inputAddLabels" name="labels" type="text"  class="input-large"  value="">
+                    <p class="help-block">type vocabulary's labels</p>
+                  </div>
+                </div>
+
+              
+
+              </div>
+
+              <div class="span6">
+                <!-- Text input-->
+                <div class="control-group">
+                  <label class="control-label" for="textAddSource">Source Title</label>
+                  <div class="controls">
+                    <input id="textAddSource" name="source" type="text" placeholder="title" class="input-large" >
+                    <p class="help-block">type source title of current vocabulary</p>
+                  </div>
+                </div>
+
+                <!-- Prepended text-->
+                <div class="control-group">
+                  <label class="control-label" for="inputAddSourceUrl">Source Url</label>
+                  <div class="controls">
+                    <div class="input-prepend">
+                      <span class="add-on">http://</span>
+                      <input id="inputAddSourceUrl" name="source_url" class="input-large" placeholder="source url" type="text">
+                    </div>
+                    <p class="help-block">type source url</p>
+                  </div>
+                </div>
+
+                <!-- Multiple Radios (inline) -->
+                <div class="control-group">
+                  <label class="control-label" for="radios">Source Type</label>
+                  <div class="controls" id="radioAddSourceType">
+                    <label class="radio inline" for="sourceTypeAdd-0">
+                      <input type="radio" name="sourceType" id="sourceTypeAdd-0" value="Book" name="source_type" checked="checked">
+                      Book
+                    </label>
+                    <label class="radio inline" for="sourceTypeAdd-1">
+                      <input type="radio" name="sourceType" id="sourceTypeAdd-1" name="source_type" value="Magazine">
+                      Magazine
+                    </label>
+                    <label class="radio inline" for="sourceTypeAdd-2">
+                      <input type="radio" name="sourceType" id="sourceTypeAdd-2" name="source_type" value="Website">
+                      Website
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+      <!-- /Modal addvocabulary -->
+                       
+{% include '_footer.html' %}
+	<link rel="stylesheet" type="text/css" href="/js/lib/jquery.tags_input_master/jquery.tagsinput.css" />
+	<script>
+    window.is_logged = {% if(is_logged) %}1;{% else %}0;{% endif %}
+
+    window.currentUser = { id: "{{ currentUser.id }}", email: "{{ currentUser.email }}", name: "{{ currentUser.name }}", lang_id: "{{ currentUser.lang_id }}" };
+
+		{% if (vocabularies|length)  %}
+		window.vocabularies = [{% for vocabulary in vocabularies %}
+    {id: "{{ vocabulary.id }}", title: "{{ vocabulary.title|e }}", source: "{{ vocabulary.source|e }}", source_url: "{{ vocabulary.source_url }}", lang_1_id: {{ vocabulary.lang_1_id }}, lang_2_id: {{ vocabulary.lang_2_id }}, date_in: {{ vocabulary.date_in }}, num_translations: {{ vocabulary.num_translations }}, labels: "{{ vocabulary.labels|e }}", user_id: {{ vocabulary.user_id }}, type_id: {{ vocabulary.type_id }}, is_published: {{ vocabulary.is_published }} },
+    {% endfor %}];
+		{% else %}
+    window.vocabularies = new Array();
+    {% endif %}
+
+    {% if (users|length)  %}
+    window.users = [{% for user in users %}{ id: "{{ user.id }}", name: "{{ user.name }}", num_subscribes: {{ user.num_subscribes }} }, {% endfor %}];
+    {% else %}
+    window.users = new Array();
+    {% endif %}
+
+		window.langs = [{ id:"1", title: "AFRIKAANS" }, { id:"2", title: "ALBANIAN" }, { id:"3", title: "AMHARIC" }, { id:"4", title: "ARABIC" }, { id:"5", title: "ARMENIAN" }, { id:"6", title: "AZERBAIJANI" }, { id:"7", title: "BASQUE" }, { id:"8", title: "BELARUSIAN" }, { id:"9", title: "BENGALI" }, { id:"10", title: "BIHARI" }, { id:"11", title: "BRETON" }, { id:"12", title: "BULGARIAN" }, { id:"13", title: "BURMESE" }, { id:"14", title: "CATALAN" }, { id:"15", title: "CHEROKEE" }, { id:"16", title: "CHINESE" }, { id:"17", title: "CHINESE_SIMPLIFIED" }, { id:"18", title: "CHINESE_TRADITIONAL" }, { id:"19", title: "CORSICAN" }, { id:"20", title: "CROATIAN" }, { id:"21", title: "CZECH" }, { id:"22", title: "DANISH" }, { id:"23", title: "DHIVEHI" }, { id:"24", title: "DUTCH" }, { id:"25", title: "ENGLISH" }, { id:"26", title: "ESPERANTO" }, { id:"27", title: "ESTONIAN" }, { id:"28", title: "FAROESE" }, { id:"29", title: "FILIPINO" }, { id:"30", title: "FINNISH" }, { id:"31", title: "FRENCH" }, { id:"32", title: "FRISIAN" }, { id:"33", title: "GALICIAN" }, { id:"34", title: "GEORGIAN" }, { id:"35", title: "GERMAN" }, { id:"36", title: "GREEK" }, { id:"37", title: "GUJARATI" }, { id:"38", title: "HAITIAN_CREOLE" }, { id:"39", title: "HEBREW" }, { id:"40", title: "HINDI" }, { id:"41", title: "HUNGARIAN" }, { id:"42", title: "ICELANDIC" }, { id:"43", title: "INDONESIAN" }, { id:"44", title: "INUKTITUT" }, { id:"45", title: "IRISH" }, { id:"46", title: "ITALIAN" }, { id:"47", title: "JAPANESE" }, { id:"48", title: "JAVANESE" }, { id:"49", title: "KANNADA" }, { id:"50", title: "KAZAKH" }, { id:"51", title: "KHMER" }, { id:"52", title: "KOREAN" }, { id:"53", title: "KURDISH" }, { id:"54", title: "KYRGYZ" }, { id:"55", title: "LAO" }, { id:"56", title: "LATIN" }, { id:"57", title: "LATVIAN" }, { id:"58", title: "LITHUANIAN" }, { id:"59", title: "LUXEMBOURGISH" }, { id:"60", title: "MACEDONIAN" }, { id:"61", title: "MALAY" }, { id:"62", title: "MALAYALAM" }, { id:"63", title: "MALTESE" }, { id:"64", title: "MAORI" }, { id:"65", title: "MARATHI" }, { id:"66", title: "MONGOLIAN" }, { id:"67", title: "NEPALI" }, { id:"68", title: "NORWEGIAN" }, { id:"69", title: "OCCITAN" }, { id:"70", title: "ORIYA" }, { id:"71", title: "PASHTO" }, { id:"72", title: "PERSIAN" }, { id:"73", title: "POLISH" }, { id:"74", title: "PORTUGUESE" }, { id:"75", title: "PORTUGUESE_PORTUGAL" }, { id:"76", title: "PUNJABI" }, { id:"77", title: "QUECHUA" }, { id:"78", title: "ROMANIAN" }, { id:"79", title: "RUSSIAN" }, { id:"80", title: "SANSKRIT" }, { id:"81", title: "SCOTS_GAELIC" }, { id:"82", title: "SERBIAN" }, { id:"83", title: "SINDHI" }, { id:"84", title: "SINHALESE" }, { id:"85", title: "SLOVAK" }, { id:"86", title: "SLOVENIAN" }, { id:"87", title: "SPANISH" }, { id:"88", title: "SUNDANESE" }, { id:"89", title: "SWAHILI" }, { id:"90", title: "SWEDISH" }, { id:"91", title: "SYRIAC" }, { id:"92", title: "TAJIK" }, { id:"93", title: "TAMIL" }, { id:"94", title: "TATAR" }, { id:"95", title: "TELUGU" }, { id:"96", title: "THAI" }, { id:"97", title: "TIBETAN" }, { id:"98", title: "TONGA" }, { id:"99", title: "TURKISH" }, { id:"103", title: "UIGHUR" }, { id:"100", title: "UKRAINIAN" }, { id:"101", title: "URDU" }, { id:"102", title: "UZBEK" }, { id:"104", title: "VIETNAMESE" }, { id:"105", title: "WELSH" }, { id:"106", title: "YIDDISH" }, { id:"107", title: "YORUBA" } ];
+
+    
+
+	</script>
+	<script src="/js/lib/require.js"></script>
+	<script src="/js/myvocabularies.js"></script>
+{% include '_bottom.html' %}

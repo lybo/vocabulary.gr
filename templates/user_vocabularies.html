@@ -1,0 +1,171 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+
+
+		  <div id="content">
+          <div id="vocabularies">
+            <!--
+            var pages = Math.ceil(vocabularies_length/10);
+            var user_id = users[0].id;
+            -->
+            {% set page_user =  users[0] %}
+            
+            <div id="user-vocabularies-header">
+              <div class="row-fluid">
+                <div class="span6">
+                  <h3 style="margin: 0 0 5px 0;">
+                    <a href="/vocabularies/user/{{ page_user.id }}"><img src="{{ page_user.photo }}" class="user-image" /></a> 
+                    <a href="/vocabularies/user/{{ page_user.id }}">{{ page_user.name }}</a>
+                  </h3>
+                  {% if( is_logged == 1 and currentUser.id ) %}
+                    {% if( currentUser.id != page_user.id ) %}
+                    <div id="subscribe-controls"></div>
+                    {% endif %}
+                  {% endif %}
+                  {% if( is_logged == 0 ) %}
+                  <a href="/signup" class="btn btn-mini btn-info _tooltip" data-toggle="tooltip" data-placement="top" title="If you are logged in, you can subscribe user's ({{ page_user.name }}) vocabularies"><span class="icon icon-bookmark icon-white"></span> Subscribe</a>
+                  {% endif %}
+                </div>
+                <div class="span6" id="user-statistics">
+
+                  <div class="pull-right">
+                    <h5>{{ page_user.num_vocabularies }} Vocabularies</h5>
+                    <hr>
+                    <h5><span id="user_num_subscribes">{{ page_user.num_subscribes }}</span> Subscribers</h5>
+                    
+                  </div>
+                </div><!-- /.span6 -->
+              </div><!-- /.row-fluid -->
+             
+            </div><!-- /#user-vocabularies-header -->
+            <hr style="margin: 5px 0;">
+
+    
+   
+
+            <form id="user-vocabulary-search" >
+              <input type="hidden" name="user_id" required="" value="{{page_user.id}}">
+              <div class="input-append input-prepend ">
+                {%  if( vocabularyQuery != '' ) %}
+                <a href="/vocabularies/user/{{ page_user.id }}" class="btn" >Show All</a>
+                {% endif %}
+                
+                <input type="text" class="search-query span3" placeholder="Search" name="vocabularyQuery"  value="{{ vocabularyQuery }}">
+               <button type="submit" class="btn">Search</button> 
+                
+              </div>
+            </form>
+            <hr style="margin: 0;">
+            <div id="vocabulary-list">
+              {% for vocabulary in vocabularies %}
+                <div class="media" id="vocabulary-list-{{ vocabulary.id }}">
+
+                  
+                  <div class="media-body">
+                    <h4 class="media-heading"><a href="/exercise/{{ vocabulary.id }}">{{ vocabulary.title }}</a></h4>
+                    <h5>{{ vocabulary.source }}</h5>
+                    <small>
+                      
+
+                      {% set vocabulary_user = "" %}
+                      {% for user in users %}
+                        {% if(user.id == vocabulary.user_id) %}
+                          {% set vocabulary_user = user %}
+                        {% endif %}
+                      {% endfor %}
+
+                      created <strong>{{ vocabulary.elasped_time }}</strong>
+
+                      {% if(vocabulary.source) %}
+                      for <strong>{{ vocabulary.source }}</strong>
+                        {% if(vocabulary.source_url) %}
+                        for <a href="http://{{ vocabulary.source_url }}" target="_blank"><strong>{{ vocabulary.source }}</strong></a>
+                        {% else %}
+                        for <strong>{{ vocabulary.source }}</strong>
+                        {% endif %} 
+                      {% endif %} 
+
+                      from user <a href="/vocabularies/user/{{ vocabulary_user.id }}">{{ vocabulary_user.name }}</a>, 
+
+                      consists <strong>{{ vocabulary.num_translations }}</strong> Words 
+
+                      and user has <strong>{{ vocabulary_user.num_subscribes }}</strong> subscribers
+
+                    </small>
+
+                    <span class="label label-info">
+                      {% for lang in langs %}
+                        {% if(lang.id == vocabulary.lang_1_id) %}
+                          {{ lang.title }}
+                        {% endif %}
+                      {% endfor %}
+                    </span>
+
+                    <span class="label label-info">
+                      {% for lang in langs %}
+                        {% if(lang.id == vocabulary.lang_2_id) %}
+                          {{ lang.title }}
+                        {% endif %}
+                      {% endfor %}
+                    </span>
+                    
+                    {% for label in vocabulary.labels|split(',') %}
+                    <span class="label">{{ label }}</span>
+                    {% endfor %}
+                  </div>
+                </div>
+
+              {% endfor %}
+            </div><!-- /#vocabulary-list -->
+            
+            {% if(pages>1) %}
+            <div class="pagination pagination-centered">
+              <div class="btn-group btn-centered" data-toggle="btn-radio">
+                {% if(currentPage != 1) %}
+                <a href="/vocabularies/user/{{ page_user.id }}/1" class="btn btn-small control first-page">«</a>
+                {% endif %}
+                {% if(currentPage - 1 > 0) %}
+                <a href="/vocabularies/user/{{ page_user.id }}/{{ currentPage - 1 }}" class="btn btn-small page prev">‹</a>
+                {% endif %}
+                {% for i in range(1, pages) %}
+                <a href="/vocabularies/user/{{ page_user.id }}/{{ i }}" class="btn btn-small page {% if( i == currentPage ) %}active{% endif %}">{{ i }}</a>
+                {% endfor %}
+                {% if(currentPage + 1 <= pages) %}
+                <a href="/vocabularies/user/{{ page_user.id }}/{{ currentPage + 1 }}" type="button" class="btn btn-small  page next">›</a>
+                {% endif %}
+                {% if(currentPage != pages) %}
+                <a href="/vocabularies/user/{{ page_user.id }}/{{ pages }}" type="button" class="btn btn-small  control last-page">»</a>
+                {% endif %}
+              </div>
+              <span class="pull-right">{{ vocabularies_length }} results</span>
+            </div>  <!-- /.pagination -->
+            {% endif %}
+
+            
+          </div> <!-- /#vocabularies -->
+      </div><!-- /#content -->
+            
+{% include '_footer.html' %}
+	<link rel="stylesheet" type="text/css" href="/js/lib/jquery.tags_input_master/jquery.tagsinput.css" />
+	<script>
+    window.is_logged = {% if(is_logged) %}1;{% else %}0;{% endif %}
+
+    {% if (currentUser) %}
+    window.currentUser = { id: "{{ currentUser.id }}", email: "{{ currentUser.email }}", name: "{{ currentUser.name }}", lang_id: "{{ currentUser.lang_id }}" };
+    {% else %}
+    window.currentUser = new Array();
+    {% endif %}
+
+    window.user_id = {{ vocabularyUser }};
+
+    {% if (users|length)  %}
+    window.listusers = [{% for user in users %}{ id: "{{ user.id }}", name: "{{ user.name }}",  num_vocabularies: {{ user.num_vocabularies }},  num_subscribes: {{ user.num_subscribes }} }, {% endfor %}];
+    {% endif %}
+
+	</script>
+  <script src="/js/lib/require.js"></script>
+  <script src="/js/user_vocabularies.js"></script>
+	
+{% include '_bottom.html' %}

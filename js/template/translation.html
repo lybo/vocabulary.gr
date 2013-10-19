@@ -1,0 +1,18 @@
+
+<script id="translation-showInList" type="text/template">
+						
+				  <td><input type="text" name="word_1[]" value="<%= word_1 %>" class="word_1 input-small"></td>
+                  <td valign="middle">=</td>
+                  <td><input type="text" name="word_2[]" value="<%= word_2 %>" class="word_2 input-small"></td>
+                  <td valign="middle"><input type="hidden" name="translation_id[]" value="<%= id %>" class="translation_id" /><a href="#" data-toggle="tooltip" title="delete" class="btn btn-primary btn-mini btn-inverse delete"><span class="icon icon-remove icon-white"></span></a></td>	
+</script>
+
+
+<script id="translation-showInList_confirm" type="text/template">	
+				  <td><%= word_1.replace(',', ', ') %></td>
+                  <td valign="middle" style="width:30px;">=</td>
+                  <td><%= word_2.replace(',', ', ') %></td>
+</script>
+
+		
+

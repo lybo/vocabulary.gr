@@ -1,0 +1,147 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+
+		  <div id="content">
+          <div id="vocabularies">
+            
+
+            <div class="btn-group">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                Order By
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="/vocabularies/search/{{ vocabularyQuery }}/1/orderby/title|asc" class="orderby" data-field="title" data-sorttype="asc"><i class="icon icon-arrow-up"></i> Title</a></li>
+                <li><a href="/vocabularies/search/{{ vocabularyQuery }}/1/orderby/title|desc" class="orderby" data-field="title" data-sorttype="desc"><i class="icon icon-arrow-down"></i> Title</a></li>
+                <li><a href="/vocabularies/search/{{ vocabularyQuery }}/1/orderby/date_in|asc" class="orderby" data-field="date_in" data-sorttype="asc"><i class="icon icon-arrow-up"></i> Date</a></li> 
+                <li><a href="/vocabularies/search/{{ vocabularyQuery }}/1/orderby/date_in|desc" class="orderby" data-field="date_in" data-sorttype="desc"><i class="icon icon-arrow-down"></i> Date</a></li> 
+              </ul>
+            </div>
+            {% if(orderby) %}
+              {% if orderby == 'title' %}
+                Title
+              {% endif %}
+              {% if orderby == 'date_in' %}
+                Date
+              {% endif %}
+              {% if ordertype == 'asc' %}
+                <i class="icon icon-arrow-up"></i>
+              {% endif %}
+              {% if ordertype == 'desc' %}
+                <i class="icon icon-arrow-down"></i>
+              {% endif %}
+              
+            {% endif %}
+              
+            <div class="muted pull-right" style="padding-top: 5px;"><small >{{ vocabularies_length }} results</small></div>
+
+            <hr/>
+            <div id="vocabulary-list">
+              {% for vocabulary in vocabularies %}
+                <div class="media" id="vocabulary-list-{{ vocabulary.id }}">
+
+                  
+                  <div class="media-body">
+                    <h4 class="media-heading"><a href="/exercise/{{ vocabulary.id }}">{{ vocabulary.title }}</a></h4>
+                    <h5>{{ vocabulary.source }}</h5>
+                    <small>
+                      
+
+                      {% set vocabulary_user = "" %}
+                      {% for user in users %}
+                        {% if(user.id == vocabulary.user_id) %}
+                          {% set vocabulary_user = user %}
+                        {% endif %}
+                      {% endfor %}
+
+                      created <strong>{{ vocabulary.elasped_time }}</strong>
+
+                      {% if(vocabulary.source) %}
+                      for <strong>{{ vocabulary.source }}</strong>
+                        {% if(vocabulary.source_url) %}
+                        for <a href="http://{{ vocabulary.source_url }}" target="_blank"><strong>{{ vocabulary.source }}</strong></a>
+                        {% else %}
+                        for <strong>{{ vocabulary.source }}</strong>
+                        {% endif %} 
+                      {% endif %} 
+
+                      from user <a href="/vocabularies/user/{{ vocabulary_user.id }}">{{ vocabulary_user.name }}</a>, 
+
+                      consists <strong>{{ vocabulary.num_translations }}</strong> Words 
+
+                      and user has <strong>{{ vocabulary_user.num_subscribes }}</strong> subscribers
+
+                    </small>
+
+                    <span class="label label-info">
+                      {% for lang in langs %}
+                        {% if(lang.id == vocabulary.lang_1_id) %}
+                          {{ lang.title }}
+                        {% endif %}
+                      {% endfor %}
+                    </span>
+
+                    <span class="label label-info">
+                      {% for lang in langs %}
+                        {% if(lang.id == vocabulary.lang_2_id) %}
+                          {{ lang.title }}
+                        {% endif %}
+                      {% endfor %}
+                    </span>
+                    
+                    {% for label in vocabulary.labels|split(',') %}
+                    <span class="label">{{ label }}</span>
+                    {% endfor %}
+                  </div>
+                </div>
+
+              {% endfor %}
+            </div><!-- /#vocabulary-list -->
+            {% if(pages>1) %}
+            {% if(orderby) %}
+              {% set order = '/orderby/'~orderby~'|'~ordertype %}
+            {% else %}
+              {% set order = '' %}
+            {% endif %}
+            <div class="pagination pagination-centered">
+              <div class="btn-group btn-centered" data-toggle="btn-radio">
+                {% if(currentPage != 1) %}
+                <a href="/vocabularies/search/{{ vocabularyQuery }}/1{{ order }}" class="btn btn-small control first-page">«</a>
+                {% endif %}
+                {% if(currentPage - 1 > 0) %}
+                <a href="/vocabularies/search/{{ vocabularyQuery }}/{{ currentPage - 1 }}{{ order }}" class="btn btn-small page prev">‹</a>
+                {% endif %}
+                {% for i in range(1, pages) %}
+                <a href="/vocabularies/search/{{ vocabularyQuery }}/{{ i }}{{ order }}" class="btn btn-small page {% if( i == currentPage ) %}active{% endif %}">{{ i }}</a>
+                {% endfor %}
+                {% if(currentPage + 1 <= pages) %}
+                <a href="/vocabularies/search/{{ vocabularyQuery }}/{{ currentPage + 1 }}{{ order }}" type="button" class="btn btn-small  page next">›</a>
+                {% endif %}
+                {% if(currentPage != pages) %}
+                <a href="/vocabularies/search/{{ vocabularyQuery }}/{{ pages }}{{ order }}" type="button" class="btn btn-small  control last-page">»</a>
+                {% endif %}
+              </div>
+              <center style="padding-top: 5px;">{{ vocabularies_length }} results</center>
+            </div>  <!-- /.pagination -->
+            {% endif %}
+          </div> <!-- /#vocabularies -->
+      </div><!-- /#content -->
+            
+{% include '_footer.html' %}
+	<link rel="stylesheet" type="text/css" href="/js/lib/jquery.tags_input_master/jquery.tagsinput.css" />
+	<script>
+    window.is_logged = {% if(is_logged) %}1;{% else %}0;{% endif %}
+
+    {% if (currentUser) %}
+    window.currentUser = { id: "{{ currentUser.id }}", email: "{{ currentUser.email }}", name: "{{ currentUser.name }}", lang_id: "{{ currentUser.lang_id }}" };
+    {% else %}
+    window.currentUser = new Array();
+    {% endif %}
+    
+  </script>
+  <script src="/js/lib/require.js"></script>
+  <script src="/js/home.js"></script>
+	
+{% include '_bottom.html' %}

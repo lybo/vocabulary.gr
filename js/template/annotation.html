@@ -1,0 +1,83 @@
+<script id="add" type="text/template">
+					<div class="arrow"></div>
+					<div class="input-container">
+						<input type="hidden" value="<%= userId %>" name="editor_id" />
+						<input type="hidden" value="<%= relative_table %>" name="relative_table" />
+						<input type="hidden" value="<%= relative_item_id %>" name="relative_item_id" />
+						<textarea class="content input fck small" id="add-annotation-content" name="content" placeholder="Please type the annotation's content"></textarea>
+					</div>
+					<ul id="add-annotation-file_ids-container" class="files-list"></ul>
+					<div class="actions">
+						<div class="left">
+							<input type="file" class="add-annotation-file_ids input" name="file_ids" id="add-annotation-file_ids"  />
+						</div>
+						<div class="right">
+							<input type="submit" value="Share" class="ui-button ui-widget ui-state-default ui-corner-all">
+						</div>
+						<div class="clear"></div>
+					</div>
+</script>
+
+
+<script id="edit" type="text/template">
+		<form id="edit-annotation-form">
+			<div id="details-header">
+				<div class="left">
+					<div class="form-feedback alert-success">Your Changes are updated</div>
+					<div class="form-feedback alert-error">It is occured error(s)</div>
+				</div>
+				<div class="buttons-container right">
+					<input type="submit" value="Save" class="ui-button ui-widget ui-state-default ui-corner-all" />
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div id="details-content-container">
+				<div id="details-content" ></div>
+			</div>
+		</form>
+</script>
+
+<script id="showInList" type="text/template">
+			            <td class="user" valign="top"><% if(icon){ %><img src="uploads/users/<%= icon %>" /><% } else { %> no icon <% } %></td>
+						<td>
+							<div class="annotation-details">
+								<div class="arrow"></div>
+								<div class="user-name"><%= name %> says:</div>
+								<div class="content">"<%= content.replace(/\n/g, "<br />") %>"</div>
+								<% if(files.length){ %>
+								<em>Attached Files</em>
+								<ul class="files-list">
+										<% _.each(files, function(file, key){ %>
+
+											<li><a href="<%= file.src %>/<%= file.name %>" target="_blank"><%= file.name %></a></li>
+
+										<% }); %>
+								</ul>
+								<% } %>
+							</div>
+						</td>
+</script>
+
+
+<script id="annotator" type="text/template">
+
+						<li>
+							<img src="<%= icon %>" />
+							<input type="hidden" name="annotator[]" value="<%= id %>" />
+							<a href="#" class="delete_annotator">delete</a>
+						</li>
+
+</script>
+
+<script id="layout" type="text/template">
+			<label>Annotations</label>
+			<div id="annotations">
+				<table>
+					<tr>
+						<td class="user" valign="top"><img src="uploads/users/<%= icon %>" /></td>
+						<td id="add-annotation-form-container"></td>
+					</tr>
+				</table>
+				<table class="list"><tr><td align="center"><br/>Loading Task's Annotations<br/><img src="images/ajax-loader.gif" /></td></tr></table>
+			</div>
+</script>

@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'pf_centro_sans_prothin';
+    src: url('../fonts/pfcentrosanspro-thin.eot');
+    src: url('../fonts/pfcentrosanspro-thin.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/pfcentrosanspro-thin.woff') format('woff'),
+         url('../fonts/pfcentrosanspro-thin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'pf_centro_sans_prolight';
+    src: url('../fonts/pfcentrosanspro-light.eot');
+    src: url('../fonts/pfcentrosanspro-light.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/pfcentrosanspro-light.woff') format('woff'),
+         url('../fonts/pfcentrosanspro-light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'pf_centro_sans_proregular';
+    src: url('../fonts/pfcentrosanspro-regular.eot');
+    src: url('../fonts/pfcentrosanspro-regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/pfcentrosanspro-regular.woff') format('woff'),
+         url('../fonts/pfcentrosanspro-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'pf_centro_sans_probold';
+    src: url('../fonts/pfcentrosanspro-bold.eot');
+    src: url('../fonts/pfcentrosanspro-bold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/pfcentrosanspro-bold.woff') format('woff'),
+         url('../fonts/pfcentrosanspro-bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'pf_centro_sans_problack';
+    src: url('../fonts/pfcentrosanspro-black.eot');
+    src: url('../fonts/pfcentrosanspro-black.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/pfcentrosanspro-black.woff') format('woff'),
+         url('../fonts/pfcentrosanspro-black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}

@@ -1,0 +1,36 @@
+{% include '_head.html' %} 
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+      <div id="content">
+        <div class="well">
+            <h3>Sign Up</h3>
+            <form id="form-signup-individual" class="form-signup-individual" autocomplete="off" method="post" action="/users" />
+              <div>
+                <input type="text" id="signUpemail" name="signUpemail" class="input-block-level" placeholder="Email address" >
+              </div>
+              <input type="password" id="signUppassword" name="signUppassword" class="input-block-level" placeholder="Password" >
+              <input type="password" id="signUppassword2" name="signUppassword2" class="input-block-level" placeholder="Confirm Password"  >
+              <select class="input-block-level" id="signUpLanguage" name="signUpLanguage" >
+                <option value="">Select your native Language</option>
+                {% if (langs|length > 0) %}
+                {% for lang in langs %}
+                <option value="{{ lang.id }}">{{ lang.title }}</option>
+                {% endfor %}
+                {% endif %}
+              </select>
+              <button class="btn btn-large btn-primary" type="submit">Sign Up</button> 
+              <label class="checkbox inline" style="margin:0 0 0 30px;">
+                  <span>I agree to the <a href="termsandconditions">Terms & Conditions</a>.</span>
+                  <input type="checkbox" name="agree" value="1">
+              </label>
+              <center><br/>If you have already an account <a href="/login">log in</a></center>
+            </form>
+        </div> 
+      </div><!--/#content-->
+      <div class="clearfix"></div>
+{% include '_footer.html' %}
+    
+  <script src="js/lib/require.js"></script>
+  <script src="js/home.js"></script>
+{% include '_bottom.html' %}

@@ -1,0 +1,45 @@
+<script id="login" type="text/template">
+	
+	<form id="login-form">
+		<div class="input-container">
+			<label for="login_email">Email</label>
+			<input type="text" class="input" name="login_email" id="email" value="" placeholder="Please type your email" />
+		</div>
+
+		<div class="input-container">
+			<label for="login_password">Password</label>
+			<input type="text" class="input" name="password" id="login_password" value="" placeholder="Please type your password" />
+		</div>
+
+		<div>
+			<input type="submit" value="Log In" class="ui-button ui-widget ui-state-default ui-corner-all" />
+		</div>
+		<div id="login-error" style="display:none;">Try again!</div>
+	</form>
+	
+</script>
+
+<script id="settings" type="text/template">
+	<ul class="dropdownbox right-side" >
+		<li>
+    		<a href="#">
+    			<img src="uploads/users/<%= icon %>" align="absmiddle" /> <%= first_name %> <%= last_name %>
+    		</a>
+			<ul>
+				<li class="tool">
+					<span class="arrow"></span>
+					<a href="#" class="multi-delete ui-button-text-icon-primary">
+    					<span class="ui-button-icon-primary ui-icon ui-icon-unlocked"></span>
+    					<span class="ui-button-text">Log Out</span>
+    				</a>
+				</li>
+				<li class="tool">
+					<a href="#" class="multi-delete ui-button-text-icon-primary">
+    					<span class="ui-button-icon-primary ui-icon ui-icon-unlocked"></span>
+    					<span class="ui-button-text">Log Out</span>
+    				</a>
+				</li>
+			</ul>
+		</li>
+	</ul>	
+</script>

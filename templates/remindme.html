@@ -1,0 +1,27 @@
+{% include '_head.html' %}
+{% include '_header.html' %}
+{% include '_left_sidebar.html' %}
+{% include '_right_sidebar.html' %}
+      <div id="content">
+        <div class="well">
+            <h3>Forgot Your Password?</h3>
+            {% if(no_email) %}
+            <div class="alert alert-error">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <h4>Error!</h4>
+              There isn't the email that you type. Try again!
+            </div>
+            {% endif %}
+            <form method="post" action="/remindme">
+              Enter your email address below and we'll send you  your password.
+              <input type="text" id="remindMeEmail" name="remindMeEmail" placeholder="Email" class="span4"/>
+              <button class="btn btn-large btn-primary" type="submit">Send</button>
+            </form>
+        </div> 
+      </div><!--/#content-->
+      <div class="clearfix"></div>
+{% include '_footer.html' %}
+    
+  <script src="js/lib/require.js"></script>
+  <script src="js/home.js"></script>
+{% include '_bottom.html' %}
