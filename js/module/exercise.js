@@ -1,9 +1,9 @@
-define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exercise.html', 'module/translation', 'serializeObject', 'timer', 'jplayer', 'cookie'], 
+define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exercise.html', 'module/translation', 'serializeObject', 'jplayer', 'cookie'],
 	function(Backbone, $, _, Utilize, mixedTemplates, Translation){
 
 	/* Template */
 	var Template = Utilize.Template(mixedTemplates);
-	
+
 	/* Declaration */
 	var Exercise = { Views: {} };
 
@@ -64,14 +64,14 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 				eachpage = parseInt($(el).data('value'))
 			;
 
-			
-			
+
+
 			if( that.eachpage != eachpage && !$(el).hasClass('difficult_words') ) {
 
 				that.eachpage = eachpage;
 				that.page = 1;
 				this.router.navigate('exercise/'+that.eachpage+'/'+that.page);
-				
+
 				var exercisesView  = new Exercise.Views.Exercises({collection: that.collection, langs: that.langs, langDirection: that.langDirection, page: that.page, eachpage: that.eachpage, router: that.router});
 
 				var exercisesView  = new Exercise.Views.Exercises2({collection: that.collection, langs: that.langs, langDirection: that.langDirection, page: that.page, eachpage: that.eachpage, router: that.router});
@@ -117,7 +117,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 				each_page_options : each_page_options,
 				eachpage : this.eachpage ? this.eachpage : 5
 			}));
-			
+
 			this.$('._tooltip').tooltip({
 				container: 'body'
 			});
@@ -159,12 +159,12 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			this.langDirection = langDirection;
 		},
 
-		changePage: function(e) {  
+		changePage: function(e) {
 			var that = this,
 				el = e.currentTarget,
 				page = parseInt($(el).text())
 			;
-			
+
 			if( that.page != page ) {
 
 				that.page = page;
@@ -197,7 +197,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			}
 
 			that.router.navigate('exercise/'+that.eachpage+'/'+that.page);
-			
+
 			var exercisesView  = new Exercise.Views.Exercises({collection: that.collection, langs: that.langs, langDirection: that.langDirection, page: that.page, eachpage: that.eachpage, router: that.router});
 
 		},
@@ -298,7 +298,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 			if( this.currentLangDirection == 1 ) {
 				this.currentLangDirection = 2;
-			} else {	
+			} else {
 				this.currentLangDirection = 1;
 			}
 
@@ -353,11 +353,11 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			}
 
 			this.$el.removeClass('focus');
-			
+
 		},
 
 	    checkTheAnswer: function(e) {
-	    	
+
 	    	var that = this;
 	    	var model = that.model;
 	    	var type = (that.langDirection==1) ? 2 : 1;
@@ -373,7 +373,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    			is_correct = 'no-answer';
 	    		}
 
-	    		
+
 	    	});
 
 	    	//alert(is_correct);
@@ -414,7 +414,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 	    	console.log(that.langDirection);
 	    	console.log(model.get('word_1')+', '+model.get('word_2') );
-	    	
+
 	    },
 
 	    speaker2: function(e) {
@@ -428,19 +428,19 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 	    	//console.log(that.langs);
 	    	//console.log(type);
-	    	
-	    	
+
+
 	    	word = that.model.get('word_'+type);
 	    	short_lang = that.langs['lang_'+type].short_title.toLowerCase();
 
-	    	
+
 	    	//var source = 'http://translate.google.com/translate_tts?tl='+short_lang+'&q='+word;
 	    	var source = 'http://vocabulary.gr/audio/'+short_lang+'/'+encodeURIComponent(word);
 
 	    	$("#speaker_player").jPlayer("setMedia", {mp3: source, solution:"flash, html" }).jPlayer("play");
 
 
-	    	
+
 
 	    },
 
@@ -449,18 +449,18 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    	var that = this;
 	    	var model = this.model;
 	    	var word, short_lang, type = 2;
-	    	
+
 	    	//alert('sfdfs');
 
 	    	//console.log(that.langs);
-	    	
+
 	    	word = that.model.get('word_'+type);
 	    	short_lang = that.langs['lang_'+type].short_title.toLowerCase();
 
 	    	//var source = 'http://translate.google.com/translate_tts?tl='+short_lang+'&q='+word;
 	    	var source = 'http://vocabulary.gr/audio/'+short_lang+'/'+encodeURIComponent(word);
 
-	     	
+
 
 		$("#speaker_player").jPlayer("setMedia", {mp3: source, solution:"flash, html" }).jPlayer("play");
 
@@ -518,7 +518,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 			vent.trigger('exercise:updateEachpage', this.eachpage);
 
-			vent.on({ 
+			vent.on({
 				'exercise:validation' : this.validation
 			}, this);
 
@@ -528,13 +528,13 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 	        var exercisePagination = new Exercise.Views.Pagination({ collection: this.collection, langDirection: this.langDirection, langs: this.langs, page: this.page, eachpage: this.eachpage, router: this.router }).render();
 
-	     
+
 	        $('#exercise-slicer-pagination').html(exercisePagination.el);
 	        //$('').html(exercisePagination.el);
 
-	        
+
 	        $('#exercise-list-body tr:first-child .result').removeClass('hidden');
-	        
+
 
  			return this;
 	    },
@@ -556,13 +556,13 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			this.$el.removeClass('practice');
 			this.$el.addClass('show-results');
 
-			
+
 
 			$("#header-langs .results").removeClass('hidden_results');
 
 			var total_num_words = this.partCollection.length;
 			var total_correct_answers = 0;
-			
+
 
 			if(!that.notEvaluateTheDifficultWords){
 				var stored_difficult_words = $.cookie('difficult_words') ? JSON.parse($.cookie('difficult_words')) : {};
@@ -570,7 +570,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 				var difficult_words = stored_difficult_words[vocabulary.id].split(',');
 				var index;
 			}
-			
+
 			this.partCollection.each( function(translation){
 				var tr = $('#translation-list-'+translation.id);
 				$('.answer', tr).removeClass('hidden');
@@ -593,13 +593,13 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 					if(!that.notEvaluateTheDifficultWords){
 						if(!_.contains(difficult_words, translation.id)) {
 							difficult_words.push(parseInt(translation.id));
-						} 
+						}
 					}
-					
+
 				}
 
 			}, this );
-			
+
 			if(!that.notEvaluateTheDifficultWords){
 				stored_difficult_words[vocabulary.id] = _.compact(difficult_words).join(',');
 				$.cookie('difficult_words', JSON.stringify(stored_difficult_words), { expires: 30*12 });
@@ -607,7 +607,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 			vent.trigger('exercise:recommendations', { 'eachpage': that.eachpage, 'page': that.page, 'words_length': total_num_words, 'total_correct_answers': total_correct_answers});
 
-			
+
 		},
 
 		updateLangDirection: function(langDirection) {
@@ -621,11 +621,11 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    	this.$el.addClass('practice');
 			this.$el.removeClass('show-results');
 
-			
+
 
 	    	if( this.collection.length ) {
 
-	    		
+
 
 	    		var page = this.page;
 	    		var eachpage = this.eachpage;
@@ -644,17 +644,17 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 		        $("#exercise-overall-scoring").html('');
 
-				vent.trigger('exercise:recommendations', { 
-					'eachpage': that.eachpage, 
-					'page': that.page, 
-					'words_length': that.partCollection.length, 
+				vent.trigger('exercise:recommendations', {
+					'eachpage': that.eachpage,
+					'page': that.page,
+					'words_length': that.partCollection.length,
 					'total_correct_answers': null
 				});
 	        }
 	        return this;
 	    },
 
-	   
+
 
 	    addOne: function(translation) {
 
@@ -672,13 +672,13 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    },
 
 	    renderTagInputs: function(unit) {
-			if(typeof unit != 'number') { 
+			if(typeof unit != 'number') {
 				unit = 2;
 			}
 			var that = this;
 			var translations_rendered = $('#exercise-list-body tr').not('.rendered');
 
-			
+
 
 			if( translations_rendered.length > 0 ) {
 
@@ -689,25 +689,25 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			    	$('input[type=text]', el.not('.rendered')).each(function(){
 				    	$(this).tagsInput({
 				    		onAddTag: function() {
-			    				
+
 			    				$(this).change()
 			    			},
 			    			onRemoveTag: function() {
-			    				
+
 			    				$(this).change();
 			    			},
-			    			'defaultText':'answer',  
+			    			'defaultText':'answer',
 				    	});
 				    });
 				    el.addClass('rendered');
-			  		
+
 				});
 
 				$("#all-exercises").show();
 				$("#execise_loader").hide();
 
 			} else {
-				
+
 				$('.translation').off('mouseover');
 				$(window).off('scroll');
 			}
@@ -751,11 +751,11 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			}
 
 			this.$el.removeClass('focus');
-			
+
 		},
 
 	    checkTheAnswer: function(e) {
-	    	
+
 	    	var that = this;
 	    	var model = that.model;
 	    	var type = (that.langDirection==1) ? 2 : 1;
@@ -771,7 +771,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    			is_correct = 'no-answer';
 	    		}
 
-	    		
+
 	    	});
 
 	    	//alert(is_correct);
@@ -812,7 +812,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 	    	console.log(that.langDirection);
 	    	console.log(model.get('word_1')+', '+model.get('word_2') );
-	    	
+
 	    },
 
 	    speaker: function(e) {
@@ -820,7 +820,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    	var that = this;
 	    	var model = this.model;
 	    	var word, short_lang, type = 1;
-	    	
+
 	    	word = that.model.get('word_1');
 	    	short_lang = that.langs['lang_1'].short_title.toLowerCase();
 	    	var source = 'http://vocabulary.gr/audio/'+short_lang+'/'+word;
@@ -860,7 +860,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			this.langs = options.langs;
 			this.router = options.router;
 
-			vent.on({ 
+			vent.on({
 				'exercise:updateLangDirection' : this.updateLangDirection,
 				'exercise:validation' : this.validation
 			}, this);
@@ -868,7 +868,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 			var exercisePagination = new Exercise.Views.Pagination({ collection: this.collection, langDirection: this.langDirection, langs: this.langs, page: this.page, eachpage: this.eachpage, router: this.router }).render();
 
-	     
+
 	        $('#exercise-slicer-pagination').html(exercisePagination.el);
 
 
@@ -907,20 +907,20 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 
 				if(tr.hasClass('is_correct')) {
 					total_correct_answers++;
-				} 
+				}
 
 			}, this );
 
-			
 
-			vent.trigger('exercise:recommendations', { 
-				'eachpage': that.eachpage, 
-				'page': that.page, 
-				'words_length': that.partCollection.length, 
+
+			vent.trigger('exercise:recommendations', {
+				'eachpage': that.eachpage,
+				'page': that.page,
+				'words_length': that.partCollection.length,
 				'total_correct_answers': total_correct_answers
 			});
 
-			
+
 		},
 
 	    render: function() {
@@ -930,10 +930,10 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    	this.$el.addClass('practice');
 			this.$el.removeClass('show-results');
 
-			
+
 
 	    	if( this.collection.length ) {
-	    		
+
 	    		var page = this.page;
 	    		var eachpage = this.eachpage;
 
@@ -943,7 +943,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    		this.partCollection = new Translation.Collection(_.shuffle(this.collection.slice(begin, end)));
 	        	this.partCollection.each( this.addOne, this );
 	        	this.renderTagInputs( eachpage );
-	        	
+
 
 	        	$('#exercise2-list-body tr:first-child .tagsinput input').focus();
 
@@ -953,10 +953,10 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 					container: 'body'
 				});
 
-				/*vent.trigger('exercise:recommendations', { 
-					'eachpage': that.eachpage, 
-					'page': that.page, 
-					'words_length': that.partCollection.length, 
+				/*vent.trigger('exercise:recommendations', {
+					'eachpage': that.eachpage,
+					'page': that.page,
+					'words_length': that.partCollection.length,
 					'total_correct_answers': null
 				});*/
 
@@ -983,21 +983,21 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 				}*/
 
 
-				
+
 	    		//
 
 	    		//_.shuffle(this.collection.slice(begin, end))
 
 	    		//_.slice(this.collection.shuffle(), 0, 10)
 
-	        	
 
-	        	
+
+
 	        }
 	        return this;
 	    },
 
-	    
+
 
 	    addOne: function(translation) {
 
@@ -1015,7 +1015,7 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    },
 
 	    renderTagInputs: function(unit) {
-			if(typeof unit != 'number') { 
+			if(typeof unit != 'number') {
 				unit = 2;
 			}
 			var that = this;
@@ -1030,18 +1030,18 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 			    	$('input[type=text]', el.not('.rendered')).each(function(){
 				    	$(this).tagsInput({
 				    		onAddTag: function() {
-			    				
+
 			    				$(this).change()
 			    			},
 			    			onRemoveTag: function() {
-			    				
+
 			    				$(this).change();
 			    			},
-			    			'defaultText':'answer',  
+			    			'defaultText':'answer',
 				    	});
 				    });
 				    el.addClass('rendered');
-			  		
+
 				});
 
 			} else {
@@ -1052,10 +1052,10 @@ define(['backbone', 'jquery', 'underscore', 'module/utilize', 'text!template/exe
 	    }
 	});
 
-	
 
-	
 
-	
+
+
+
 	return Exercise;
 });
