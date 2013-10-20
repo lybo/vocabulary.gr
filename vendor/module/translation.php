@@ -33,7 +33,7 @@ $getTranslations = function($route) use ($app) {
 
 	$env = $app->environment();
 	$data = $env['req:data'];
-	
+
 	$sql_WHERE = '';
 	if( $data['vocabularyId'] ) {
 		$sql_WHERE = "WHERE vocabulary_id='" . $data['vocabularyId'] . "'";
@@ -44,7 +44,7 @@ $getTranslations = function($route) use ($app) {
     $translations = get_values_assoc_array($db, $sql);
 
 
-	
+
 	$data['translations'] = $translations;
     $env['req:data'] = $data;
 };
@@ -55,17 +55,17 @@ $importCsv = function($route) use ($app) {
         $data = $env['req:data'];
         $req = $app->request();
         $res = $app->response();
-        
+
         $data['vocabularyId'] = $data['vocabulary']['id'];
 
-        $FileName = strtolower($_FILES['file']['name']); 
+        $FileName = strtolower($_FILES['file']['name']);
         //$FileName_path = $_FILES['file']["tmp_name"];
 
         $UploadDirectory = 'csv/';
         $NewFileName = $data['vocabulary']['id'].'.csv';
 
         $new_tranlstions = array();
-        
+
         if(move_uploaded_file($_FILES['file']["tmp_name"], $UploadDirectory . $NewFileName )){
 
             chmod($UploadDirectory . $NewFileName, 0755);
@@ -73,21 +73,21 @@ $importCsv = function($route) use ($app) {
             $csvData = file_get_contents($UploadDirectory . $NewFileName);
 
 
-            
 
-            $new_tranlstions = explode("\n", $csvData); 
 
-            
+            $new_tranlstions = explode("\n", $csvData);
+
+
             foreach ($new_tranlstions as $key => $value) {
             	$words = explode("\t", $value);
 
             	if(count($words)){
-	            	$item = array('word_1'=>$words[0], 'word_2'=>$words[1]); 
+	            	$item = array('word_1'=>$words[0], 'word_2'=>$words[1]);
 	            	if( trim($words[0]) && trim($words[1]) ) {
 
-		            	$new_tranlstions2[] = array( 
-		            			'id'=>$key, 
-		            			'word_1'=>str_replace("\n", '', trim($words[0])), 
+		            	$new_tranlstions2[] = array(
+		            			'id'=>$key,
+		            			'word_1'=>str_replace("\n", '', trim($words[0])),
 		            			'word_2'=>str_replace("\n", '', trim($words[1]))
 		            	);
 		            }
@@ -102,7 +102,7 @@ $importCsv = function($route) use ($app) {
 
             foreach ($new_tranlstions as $key => $value) {
                 # code...
-            
+
                 $sql = "INSERT INTO translations (id, word_1, word_2, vocabulary_id, date_in) VALUES (null, ?, ?, ?, UNIX_TIMESTAMP() )";
                 $stmt = $db->prepare($sql);
                 $stmt->bind_param( 'ssi',
@@ -111,12 +111,12 @@ $importCsv = function($route) use ($app) {
                     $data['vocabulary']['id']
                 );
                 $stmt->execute();
-            } 
+            }
 
             */
            // print_r($data);
-            
-            
+
+
         }
 
         echo str_replace("\n", '', json_encode($new_tranlstions));
@@ -152,7 +152,7 @@ $getCachedTranslations = function($route) use ($app) {
 };
 
 $sendExercise = function() use ($app) {
-	
+
 	$env = $app->environment();
 	$data = $env['req:data'];
 
@@ -175,7 +175,7 @@ $sendExercise = function() use ($app) {
 };
 
 $sendTranslations = function() use ($app) {
-	
+
 	$env = $app->environment();
 	$data = $env['req:data'];
 
@@ -201,6 +201,8 @@ $sendTranslations = function() use ($app) {
         	}
 
         }
+
+        $data['page_title'] = 'Edit words of "' . $data['vocabulary']['title'] . '"';
 
         $app->render('translations.html', $data);
 	}
@@ -243,16 +245,16 @@ $sendSaveTranslations = function() use ($app) {
 
 	$env = $app->environment();
 	$data = $env['req:data'];
-	
+
 	$req = $app->request();
 	$res = $app->response();
 	$mediaType = getContentData($req);
-	
+
 	if($mediaType == 'json') {
 
 		$res['Content-Type'] = 'application/json';
 		$res->body(json_encode($data['translation']));
-		
+
 	}
 
 };
@@ -269,8 +271,8 @@ $updateTranslation = function($route) use ($app) {
 		$translation = json_decode($input, true);
 
 		$db = getConnection();
-	    $sql = "UPDATE translations SET 
-	    		  word_1 = ?, 
+	    $sql = "UPDATE translations SET
+	    		  word_1 = ?,
                   word_2 = ?
                   WHERE id = ?";
 	    $stmt = $db->prepare($sql);
@@ -294,16 +296,16 @@ $sendUpdateTranslations = function() use ($app) {
 
 	$env = $app->environment();
 	$data = $env['req:data'];
-	
+
 	$req = $app->request();
 	$res = $app->response();
 	$mediaType = getContentData($req);
-	
+
 	if($mediaType == 'json') {
 
 		$res['Content-Type'] = 'application/json';
 		$res->body(json_encode($data['translation']));
-		
+
 	}
 
 };
@@ -327,24 +329,24 @@ $deleteTranslation = function($route) use ($app) {
 		$env['req:data'] = $data;
 
 	}
-	
+
 };
 
 $sendDeleteTranslation = function() use ($app) {
 
 	$env = $app->environment();
 	$data = $env['req:data'];
-	
+
 	$req = $app->request();
 	$res = $app->response();
 	$mediaType = getContentData($req);
-	
+
 	if($mediaType == 'json') {
 
 		$res['Content-Type'] = 'application/json';
 		$res->body(json_encode(array('id'=>$data['translationId'])));
-		
+
 	}
-	
+
 };
 
